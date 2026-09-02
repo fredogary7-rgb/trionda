@@ -63,7 +63,7 @@ if (loading) {
             Votre demande de <span className="text-brand-500 font-bold">{parseInt(amount).toLocaleString("fr-FR")} FCFA</span> est enregistrée.
           </p>
           <p className="text-xs text-gray-400 mb-6">Traitement sous 24-48h.</p>
-          <button onClick={reset} className="btn-primary text-sm">Nouveau retrait</button>
+          <button onClick={reset} className="btn-brand text-sm">Nouveau retrait</button>
         </div>
       </div>
     );
@@ -114,7 +114,7 @@ return (
             <div>
               <label className="block text-xs text-gray-400 mb-1">Nom du bénéficiaire</label>
               <input type="text" value={name} onChange={e => setName(e.target.value)}
-                className="glass-input py-2.5 text-sm" placeholder="Nom sur le compte Orange" />
+                className="input-light py-2.5 text-sm" placeholder="Nom sur le compte Orange" />
             </div>
             <div className="flex items-start gap-2 p-3 bg-flame-500/5 border border-flame-500/10 rounded-xl">
               <span className="text-flame-400 text-sm shrink-0">⚠️</span>
@@ -124,7 +124,7 @@ return (
               <div className={`p-3 rounded-xl text-xs ${msg.type === "error" ? "bg-flame-500/10 text-flame-400" : "bg-emerald-500/10 text-emerald-400"}`}>{msg.text}</div>
             )}
             <button onClick={handleSubmit} disabled={submitting}
-              className="btn-primary">{submitting ? "Traitement..." : "Demander le retrait"}</button>
+              className="btn-brand">{submitting ? "Traitement..." : "Demander le retrait"}</button>
           </div>
         )}
       </div>

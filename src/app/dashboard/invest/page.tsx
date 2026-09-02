@@ -57,8 +57,8 @@ export default function InvestPage() {
             <div className="flex justify-between text-sm"><span className="text-gray-400">Fin</span><span className="text-brand-500">{new Date(result.endDate).toLocaleDateString("fr-FR")}</span></div>
           </div>
           <div className="flex gap-3">
-            <button onClick={() => { setSelected(null); setStep("plans"); }} className="flex-1 btn-outline text-sm py-3">Acheter un autre</button>
-            <button onClick={() => router.push(`/dashboard/invest/${result.id}`)} className="flex-1 btn-primary text-sm py-3">Suivre →</button>
+            <button onClick={() => { setSelected(null); setStep("plans"); }} className="flex-1 btn-outline-light text-sm py-3">Acheter un autre</button>
+            <button onClick={() => router.push(`/dashboard/invest/${result.id}`)} className="flex-1 btn-brand text-sm py-3">Suivre →</button>
           </div>
         </div>
       </div>
@@ -84,7 +84,7 @@ export default function InvestPage() {
           </div>
           {balance < selected.amount && <div className="mb-4 p-3 bg-flame-500/10 border border-flame-500/20 rounded-xl text-xs text-flame-300">Solde insuffisant. Rechargez votre compte.</div>}
           {error && <div className="mb-4 p-3 bg-flame-500/10 border border-flame-500/20 rounded-xl text-xs text-flame-300">{error}</div>}
-          <button onClick={handleBuy} disabled={buying || balance < selected.amount} className="btn-primary">{buying ? "Traitement..." : `Acheter pour ${selected.amount.toLocaleString("fr-FR")} FCFA`}</button>
+          <button onClick={handleBuy} disabled={buying || balance < selected.amount} className="btn-brand">{buying ? "Traitement..." : `Acheter pour ${selected.amount.toLocaleString("fr-FR")} FCFA`}</button>
         </div>
       </div>
     );

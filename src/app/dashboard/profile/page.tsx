@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { signOut } from "next-auth/react";
+import ContactButtons from "@/components/ContactButtons";
 
 export default function ProfilePage() {
   const [data, setData] = useState<any>(null);
@@ -115,24 +116,24 @@ export default function ProfilePage() {
             <div>
               <label className="block text-xs text-gray-400 mb-1">Prénom</label>
               <input value={form.firstName} onChange={e => setForm({ ...form, firstName: e.target.value })}
-                className="glass-input py-2.5 text-sm" placeholder="Votre prénom" />
+                className="input-light py-2.5 text-sm" placeholder="Votre prénom" />
             </div>
             <div>
               <label className="block text-xs text-gray-400 mb-1">Nom</label>
               <input value={form.lastName} onChange={e => setForm({ ...form, lastName: e.target.value })}
-                className="glass-input py-2.5 text-sm" placeholder="Votre nom" />
+                className="input-light py-2.5 text-sm" placeholder="Votre nom" />
             </div>
             <div>
               <label className="block text-xs text-gray-400 mb-1">Email</label>
               <input value={form.email} onChange={e => setForm({ ...form, email: e.target.value })}
-                className="glass-input py-2.5 text-sm" placeholder="vous@exemple.com" />
+                className="input-light py-2.5 text-sm" placeholder="vous@exemple.com" />
             </div>
             {msg.text && (
               <div className={`p-2 rounded-lg text-xs ${msg.type === "success" ? "bg-emerald-500/10 text-emerald-400" : "bg-flame-500/10 text-flame-400"}`}>{msg.text}</div>
             )}
             <div className="flex gap-2">
-              <button onClick={() => { setEdit(false); setMsg({ type: "", text: "" }); }} className="flex-1 btn-outline py-2.5 text-sm">Annuler</button>
-              <button onClick={handleSave} disabled={saving} className="flex-1 btn-primary py-2.5 text-sm">{saving ? "Sauvegarde..." : "Enregistrer"}</button>
+              <button onClick={() => { setEdit(false); setMsg({ type: "", text: "" }); }} className="flex-1 btn-outline-light py-2.5 text-sm">Annuler</button>
+              <button onClick={handleSave} disabled={saving} className="flex-1 btn-brand py-2.5 text-sm">{saving ? "Sauvegarde..." : "Enregistrer"}</button>
             </div>
           </div>
         ) : (
@@ -168,6 +169,9 @@ export default function ProfilePage() {
         </div>
         <p className="text-[11px] text-gray-400 mt-2">Partagez ce code pour parrainer et gagner des commissions.</p>
       </div>
+
+      {/* Contact */}
+      <ContactButtons />
 
       {/* Danger zone */}
       <div className="card p-5 border-flame-500/10">

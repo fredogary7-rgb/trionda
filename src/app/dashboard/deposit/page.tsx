@@ -81,7 +81,7 @@ function renderStep1(amount: number, custom: string, presets: number[], select: 
         </div>
       </div>
       {msg.text && <div className={`mb-4 p-3 rounded-xl text-xs ${msg.type==="error"?"bg-flame-500/10 text-flame-400":"bg-emerald-500/10 text-emerald-400"}`}>{msg.text}</div>}
-      <button onClick={next} className="btn-primary">Continuer</button>
+      <button onClick={next} className="btn-brand">Continuer</button>
       <p className="text-[11px] text-gray-400 text-center mt-4">Si le paiement n&apos;est pas arrivé, veuillez contacter le support.</p>
     </div>
   );
@@ -110,7 +110,7 @@ function renderStep2(amount: number, phone: string, setPhone: (v: string) => voi
           <p className="text-[11px] text-flame-300">Un numéro incorrect peut entraîner la perte des fonds.</p>
         </div>
         {msg.text && <div className={`mb-4 p-3 rounded-xl text-xs ${msg.type==="error"?"bg-flame-500/10 text-flame-400":"bg-emerald-500/10 text-emerald-400"}`}>{msg.text}</div>}
-        <button onClick={next} disabled={loading} className="btn-primary">{loading ? "Traitement..." : "Confirmer →"}</button>
+        <button onClick={next} disabled={loading} className="btn-brand">{loading ? "Traitement..." : "Confirmer →"}</button>
       </div>
     </div>
   );

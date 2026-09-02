@@ -174,19 +174,19 @@ export default function AdminPage() {
             <div>
               <label className="block text-xs text-gray-400 mb-1">ID utilisateur</label>
               <input value={creditForm.userId} onChange={e => setCreditForm({ ...creditForm, userId: e.target.value })}
-                className="glass-input py-2.5 text-sm" placeholder="UUID de l'utilisateur" />
+                className="input-light py-2.5 text-sm" placeholder="UUID de l'utilisateur" />
             </div>
             <div>
               <label className="block text-xs text-gray-400 mb-1">Montant (+ crédit, - débit)</label>
               <input value={creditForm.amount} onChange={e => setCreditForm({ ...creditForm, amount: e.target.value })}
-                className="glass-input py-2.5 text-sm" placeholder="+10000 ou -5000" type="number" />
+                className="input-light py-2.5 text-sm" placeholder="+10000 ou -5000" type="number" />
             </div>
             <div>
               <label className="block text-xs text-gray-400 mb-1">Description</label>
               <input value={creditForm.description} onChange={e => setCreditForm({ ...creditForm, description: e.target.value })}
-                className="glass-input py-2.5 text-sm" placeholder="Motif de l'opération" />
+                className="input-light py-2.5 text-sm" placeholder="Motif de l'opération" />
             </div>
-            <button type="submit" disabled={acting === "credit"} className="btn-primary text-sm">
+            <button type="submit" disabled={acting === "credit"} className="btn-brand text-sm">
               {acting === "credit" ? "Traitement..." : "Exécuter"}
             </button>
           </form>

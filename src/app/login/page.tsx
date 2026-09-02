@@ -49,7 +49,7 @@ function LoginForm() {
           <form onSubmit={handleSubmit} className="space-y-5">
             <InputField id="identifier" label="Téléphone ou Email" type="text" value={identifier} onChange={(e) => setIdentifier(e.target.value)} placeholder="+226 XX XX XX XX ou email" icon="phone" />
             <InputField id="password" label="Mot de passe" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" icon="lock" />
-            <button type="submit" disabled={loading} className="btn-primary mt-2">
+            <button type="submit" disabled={loading} className="btn-brand mt-2">
               {loading ? <Spinner text="Connexion..." /> : "Se connecter"}
             </button>
           </form>

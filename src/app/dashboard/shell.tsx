@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import TopNav from "@/components/TopNav";
 import BottomNav from "@/components/BottomNav";
+import FloatingContact from "@/components/FloatingContact";
 
 export default function DashboardShell({ children }: { children: React.ReactNode }) {
   const { data: session, status } = useSession();
@@ -25,6 +26,7 @@ export default function DashboardShell({ children }: { children: React.ReactNode
       <TopNav userName={name} isAdmin={isAdmin} />
       {children}
       <BottomNav />
+      <FloatingContact />
     </div>
   );
 }

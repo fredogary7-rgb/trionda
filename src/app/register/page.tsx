@@ -76,7 +76,7 @@ export default function RegisterPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <select id="country" value={form.country} onChange={update("country")}
-                    className="glass-input pl-11 appearance-none cursor-pointer">
+                    className="input-light pl-11 appearance-none cursor-pointer">
                     <option value="Burkina Faso">🇧🇫 Burkina Faso</option>
                   </select>
                   <svg className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -94,7 +94,7 @@ export default function RegisterPage() {
               <InputField id="password" label="Mot de passe" type="password" value={form.password} onChange={update("password")} placeholder="6 caractères minimum" icon="lock" />
               <InputField id="confirmPassword" label="Confirmer" type="password" value={form.confirmPassword} onChange={update("confirmPassword")} placeholder="••••••••" icon="lock" />
 
-              <button type="submit" disabled={loading} className="btn-primary mt-2">
+              <button type="submit" disabled={loading} className="btn-brand mt-2">
                 {loading ? <Spinner text="Création..." /> : "Créer mon compte"}
               </button>
             </form>
