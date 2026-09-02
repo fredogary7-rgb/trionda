@@ -9,11 +9,11 @@ import { InputField } from "@/components/ui/InputField";
 
 export default function RegisterPage() {
   const router = useRouter();
-  const [form, setForm] = useState({ firstName: "", lastName: "", phone: "", email: "", password: "", confirmPassword: "", promoCode: "" });
+  const [form, setForm] = useState({ firstName: "", lastName: "", phone: "", email: "", country: "Burkina Faso", password: "", confirmPassword: "", promoCode: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const update = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => setForm({ ...form, [field]: e.target.value });
+  const update = (field: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => setForm({ ...form, [field]: e.target.value });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); setError("");
@@ -32,6 +32,7 @@ export default function RegisterPage() {
           lastName: form.lastName,
           phone: form.phone,
           email: form.email || null,
+          country: form.country,
           password: form.password,
           promoCode: form.promoCode || null,
         }),
@@ -68,6 +69,30 @@ export default function RegisterPage() {
                 <InputField id="lastName" label="Nom" type="text" value={form.lastName} onChange={update("lastName")} placeholder="Ouédraogo" icon="user" />
               </div>
               <InputField id="phone" label="Téléphone *" type="tel" value={form.phone} onChange={update("phone")} placeholder="+226 XX XX XX XX" icon="phone" />
+              <div>
+                <label htmlFor="country" className="block text-sm font-medium text-gray-300 mb-2">Pays</label>
+                <div className="relative">
+                  <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <select id="country" value={form.country} onChange={update("country")}
+                    className="glass-input pl-11 appearance-none cursor-pointer">
+                    <option value="Burkina Faso">🇧🇫 Burkina Faso</option>
+                    <option value="Côte d'Ivoire">🇨🇮 Côte d&apos;Ivoire</option>
+                    <option value="Mali">🇲🇱 Mali</option>
+                    <option value="Sénégal">🇸🇳 Sénégal</option>
+                    <option value="Niger">🇳🇪 Niger</option>
+                    <option value="Togo">🇹🇬 Togo</option>
+                    <option value="Bénin">🇧🇯 Bénin</option>
+                    <option value="Guinée">🇬🇳 Guinée</option>
+                    <option value="France">🇫🇷 France</option>
+                    <option value="Autre">🌍 Autre</option>
+                  </select>
+                  <svg className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
               <InputField id="email" label="Email (optionnel)" type="email" value={form.email} onChange={update("email")} placeholder="vous@exemple.com" icon="email" required={false} />
               <div className="relative">
                 <InputField id="promoCode" label="Code promo / Parrainage" type="text" value={form.promoCode} onChange={update("promoCode")} placeholder="Ex: TRD-JO-ABCD" icon="tag" required={false} />

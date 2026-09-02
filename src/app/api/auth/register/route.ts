@@ -10,7 +10,7 @@ function generateReferralCode(firstName: string, lastName: string): string {
 
 export async function POST(req: Request) {
   try {
-    const { firstName, lastName, email, phone, password, promoCode } = await req.json();
+    const { firstName, lastName, email, phone, country, password, promoCode } = await req.json();
 
     // Validation
     if (!firstName || !lastName || !phone || !password) {
@@ -84,6 +84,7 @@ export async function POST(req: Request) {
         lastName,
         phone: cleanPhone,
         email: email || null,
+        country: country || "Burkina Faso",
         passwordHash,
         referralCode,
         referredById,
