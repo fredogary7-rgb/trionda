@@ -36,35 +36,35 @@ export async function PUT(req: Request) {
     if (!tx.user.firstDepositDone && tx.user.referredById) {
       const depositAmount = Number(tx.amount);
 
-      // Build the chain: Lv1, Lv2, Lv3
-      let currentParentId: string | null = tx.user.referredById;
+      let nextId: string | null = tx.user.referredById;
 
-      for (let level = 0; level < 3 && currentParentId; level++) {
+      for (let level = 0; level < 3; level++) {
+        if (!nextId) break;
+        const currentId: string = nextId;
         const bonusAmount = Math.round(depositAmount * REFERRAL_LEVELS[level] / 100);
 
-        // Get parent info
-        const parentUser = await prisma.user.findUnique({
-          where: { id: currentParentId },
+        const parentData = await prisma.user.findUnique({
+          where: { id: currentId },
           select: { referredById: true, id: true },
         });
 
-        if (!parentUser) break;
+        if (!parentData) break;
 
         ops.push(
           prisma.referralBonus.create({
-            data: { receiverId: parentUser.id, fromUserId: tx.userId, depositAmount, level: level + 1, amount: bonusAmount },
+            data: { receiverId: parentData.id, fromUserId: tx.userId, depositAmount, level: level + 1, amount: bonusAmount },
           }),
           prisma.transaction.create({
-            data: { userId: parentUser.id, type: "referral", amount: bonusAmount, status: "completed", description: `Bonus parrainage Lv${level + 1} - ${tx.user.firstName} ${tx.user.lastName} - ${depositAmount.toLocaleString("fr-FR")} FCFA` },
+            data: { userId: parentData.id, type: "referral", amount: bonusAmount, status: "completed", description: `Bonus parrainage Lv${level + 1} - ${tx.user.firstName} ${tx.user.lastName} - ${depositAmount.toLocaleString("fr-FR")} FCFA` },
           }),
           prisma.wallet.upsert({
-            where: { userId: parentUser.id },
+            where: { userId: parentData.id },
             update: { balance: { increment: bonusAmount }, totalGains: { increment: bonusAmount } },
-            create: { userId: parentUser.id, balance: bonusAmount, totalGains: bonusAmount },
+            create: { userId: parentData.id, balance: bonusAmount, totalGains: bonusAmount },
           })
         );
 
-        currentParentId = parentUser.referredById;
+        nextId = parentData.referredById;
       }
 
       // Mark first deposit done
