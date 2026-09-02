@@ -49,6 +49,12 @@ export default function ContactButtons() {
           </svg>
         </a>
       </div>
-    </div>
+
+        <div className="mt-5 pt-4 border-t border-gray-100">
+          <a href="/dashboard/terms" className="text-xs text-gray-400 hover:text-brand-600 transition-colors">
+            Politique d&apos;utilisation
+          </a>
+        </div>
+      </div>
   );
 }
