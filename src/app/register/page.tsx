@@ -5,8 +5,6 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import BrandPanel from "@/components/BrandPanel";
 
-const COUNTRIES = ["Burkina Faso","Cote d'Ivoire","Mali","Senegal","Niger","Togo","Benin","Guinee","France","Autre"];
-
 export default function RegisterPage() {
   const router = useRouter();
   const [f, setF] = useState({ fn:"", ln:"", ph:"", em:"", co:"Burkina Faso", pw:"", cp:"", pc:"" });
@@ -62,7 +60,7 @@ return (
                 <div><label className="block text-xs font-medium text-gray-600 mb-1">Nom</label><input type="text" value={f.ln} onChange={up("ln")} className="input-light" placeholder="Ouedraogo" required /></div>
               </div>
               <div><label className="block text-xs font-medium text-gray-600 mb-1">Telephone *</label><input type="tel" value={f.ph} onChange={up("ph")} className="input-light" placeholder="+226 XX XX XX XX" required /></div>
-              <div><label className="block text-xs font-medium text-gray-600 mb-1">Pays</label><select value={f.co} onChange={up("co")} className="input-light cursor-pointer">{COUNTRIES.map(c => <option key={c}>{c}</option>)}</select></div>
+              <div><label className="block text-xs font-medium text-gray-600 mb-1">Pays</label><div className="input-light flex items-center gap-2 cursor-default"><span className="text-lg">🇧🇫</span><span className="text-gray-900 font-medium">Burkina Faso</span></div></div>
               <div><label className="block text-xs font-medium text-gray-600 mb-1">Email (optionnel)</label><input type="email" value={f.em} onChange={up("em")} className="input-light" placeholder="vous@exemple.com" /></div>
               <div className="relative">
                 <label className="block text-xs font-medium text-gray-600 mb-1">Code promo</label>
