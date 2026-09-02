@@ -15,6 +15,17 @@ export async function POST(req: Request) {
     if (!amt || amt < 500) return NextResponse.json({ error: "Montant minimum 500 FCFA." }, { status: 400 });
     if (!phone) return NextResponse.json({ error: "Numéro requis." }, { status: 400 });
 
+    // Vérifier si l'utilisateur a au moins un investissement actif
+    const activeInvestments = await prisma.userInvestment.findFirst({
+      where: { userId, status: "active" },
+    });
+
+    if (!activeInvestments) {
+      return NextResponse.json({
+        error: "Vous devez avoir un investissement actif pour effectuer un retrait.",
+      }, { status: 400 });
+    }
+
     // Vérifier le solde
     const wallet = await prisma.wallet.findUnique({ where: { userId } });
     if (!wallet || Number(wallet.balance) < amt) {
