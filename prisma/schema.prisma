@@ -8,27 +8,42 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(uuid())
-  phone         String   @unique
-  email         String?  @unique
-  passwordHash  String   @map("password_hash")
-  firstName     String   @map("first_name")
-  lastName      String   @map("last_name")
-  country       String   @default("Burkina Faso")
-  referralCode  String   @unique @map("referral_code")
-  referredById  String?  @map("referred_by_id")
-  referredBy    User?    @relation("Referral", fields: [referredById], references: [id])
-  referredUsers User[]   @relation("Referral")
-  promosCreated PromoCode[] @relation("PromoCreator")
-  wallet        Wallet?
-  transactions  Transaction[]
-  investments   UserInvestment[]
-  isAdmin       Boolean  @default(false) @map("is_admin")
-  isBanned      Boolean  @default(false) @map("is_banned")
-  createdAt     DateTime @default(now()) @map("created_at")
-  updatedAt     DateTime @updatedAt @map("updated_at")
+  id              String   @id @default(uuid())
+  phone           String   @unique
+  email           String?  @unique
+  passwordHash    String   @map("password_hash")
+  firstName       String   @map("first_name")
+  lastName        String   @map("last_name")
+  country         String   @default("Burkina Faso")
+  referralCode    String   @unique @map("referral_code")
+  referredById    String?  @map("referred_by_id")
+  referredBy      User?    @relation("Referral", fields: [referredById], references: [id])
+  referredUsers   User[]   @relation("Referral")
+  promosCreated   PromoCode[] @relation("PromoCreator")
+  wallet          Wallet?
+  transactions    Transaction[]
+  investments     UserInvestment[]
+  isAdmin         Boolean  @default(false) @map("is_admin")
+  isBanned        Boolean  @default(false) @map("is_banned")
+  firstDepositDone Boolean @default(false) @map("first_deposit_done")
+  referralBonuses ReferralBonus[] @relation("BonusReceiver")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
 
   @@map("users")
+}
+
+model ReferralBonus {
+  id          String   @id @default(uuid())
+  receiverId  String   @map("receiver_id")
+  receiver    User     @relation("BonusReceiver", fields: [receiverId], references: [id])
+  fromUserId  String   @map("from_user_id")
+  depositAmount Decimal @db.Decimal(15, 2) @map("deposit_amount")
+  level       Int      // 1, 2 or 3
+  amount      Decimal  @db.Decimal(15, 2)
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("referral_bonuses")
 }
 
 model PromoCode {

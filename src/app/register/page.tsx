@@ -78,15 +78,6 @@ export default function RegisterPage() {
                   <select id="country" value={form.country} onChange={update("country")}
                     className="glass-input pl-11 appearance-none cursor-pointer">
                     <option value="Burkina Faso">🇧🇫 Burkina Faso</option>
-                    <option value="Côte d'Ivoire">🇨🇮 Côte d&apos;Ivoire</option>
-                    <option value="Mali">🇲🇱 Mali</option>
-                    <option value="Sénégal">🇸🇳 Sénégal</option>
-                    <option value="Niger">🇳🇪 Niger</option>
-                    <option value="Togo">🇹🇬 Togo</option>
-                    <option value="Bénin">🇧🇯 Bénin</option>
-                    <option value="Guinée">🇬🇳 Guinée</option>
-                    <option value="France">🇫🇷 France</option>
-                    <option value="Autre">🌍 Autre</option>
                   </select>
                   <svg className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
