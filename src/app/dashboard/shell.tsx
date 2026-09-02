@@ -18,10 +18,11 @@ export default function DashboardShell({ children }: { children: React.ReactNode
   }
 
   const name = session?.user?.name || "";
+  const isAdmin = (session?.user as { isAdmin?: boolean })?.isAdmin ?? false;
 
   return (
     <div className="min-h-screen bg-[#060B1A] pb-20">
-      <TopNav userName={name} />
+      <TopNav userName={name} isAdmin={isAdmin} />
       {children}
       <BottomNav />
     </div>

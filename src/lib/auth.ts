@@ -35,6 +35,7 @@ export const authOptions: NextAuthOptions = {
           id: user.id,
           email: user.email,
           name: `${user.firstName} ${user.lastName}`,
+          isAdmin: user.isAdmin,
         };
       },
     }),
@@ -44,11 +45,13 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) { token.id = user.id; }
+      if (user) { token.isAdmin = (user as { isAdmin?: boolean }).isAdmin ?? false; }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
         (session.user as { id: string }).id = token.id as string;
+        (session.user as { isAdmin: boolean }).isAdmin = token.isAdmin as boolean;
       }
       return session;
     },
