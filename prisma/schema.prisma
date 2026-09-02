@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(uuid())
+  phone         String   @unique
+  email         String?  @unique
+  passwordHash  String   @map("password_hash")
+  firstName     String   @map("first_name")
+  lastName      String   @map("last_name")
+  country       String   @default("Burkina Faso")
+  referralCode  String   @unique @map("referral_code")
+  referredById  String?  @map("referred_by_id")
+  referredBy    User?    @relation("Referral", fields: [referredById], references: [id])
+  referredUsers User[]   @relation("Referral")
+  promosCreated PromoCode[] @relation("PromoCreator")
+  wallet        Wallet?
+  transactions  Transaction[]
+  investments   UserInvestment[]
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model PromoCode {
+  id          String   @id @default(uuid())
+  code        String   @unique
+  description String?
+  createdById String   @map("created_by_id")
+  createdBy   User     @relation("PromoCreator", fields: [createdById], references: [id])
+  maxUses     Int      @default(100)
+  uses        Int      @default(0)
+  expiresAt   DateTime?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("promo_codes")
+}
+
+model Wallet {
+  id            String        @id @default(uuid())
+  userId        String        @unique @map("user_id")
+  user          User          @relation(fields: [userId], references: [id])
+  balance       Decimal       @default(0) @db.Decimal(15, 2)
+  totalInvested Decimal       @default(0) @db.Decimal(15, 2) @map("total_invested")
+  totalGains    Decimal       @default(0) @db.Decimal(15, 2) @map("total_gains")
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+
+  @@map("wallets")
+}
+
+model InvestmentPlan {
+  id            String   @id @default(uuid())
+  name          String
+  description   String?
+  minAmount     Decimal  @db.Decimal(15, 2) @map("min_amount")
+  maxAmount     Decimal? @db.Decimal(15, 2) @map("max_amount")
+  dailyReturn   Decimal  @db.Decimal(5, 2) @map("daily_return")
+  durationDays  Int      @map("duration_days")
+  icon          String   @default("chart")
+  color         String   @default("#00C6FF")
+  isActive      Boolean  @default(true)
+  investments   UserInvestment[]
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@map("investment_plans")
+}
+
+model UserInvestment {
+  id          String         @id @default(uuid())
+  userId      String         @map("user_id")
+  user        User           @relation(fields: [userId], references: [id])
+  planId      String         @map("plan_id")
+  plan        InvestmentPlan @relation(fields: [planId], references: [id])
+  amount      Decimal        @db.Decimal(15, 2)
+  dailyGain   Decimal        @default(0) @db.Decimal(15, 2) @map("daily_gain")
+  totalGain   Decimal        @default(0) @db.Decimal(15, 2) @map("total_gain")
+  status      String         @default("active")
+  startDate   DateTime       @default(now()) @map("start_date")
+  endDate     DateTime       @map("end_date")
+  createdAt   DateTime       @default(now()) @map("created_at")
+  updatedAt   DateTime       @updatedAt @map("updated_at")
+
+  @@map("user_investments")
+}
+
+model Transaction {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  user        User     @relation(fields: [userId], references: [id])
+  type        String
+  amount      Decimal  @db.Decimal(15, 2)
+  status      String   @default("completed")
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("transactions")
+}
