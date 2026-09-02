@@ -80,7 +80,35 @@ export default function ProfilePage() {
           <p className="text-sm font-bold text-emerald-400">{parseFloat(wallet.totalGains || "0").toLocaleString("fr-FR")} F</p>
         </div>
       </div>
-{/* Info Card */}
+{/* Quick Actions: Dépôt / Retrait */}
+      <div className="grid grid-cols-2 gap-3 mb-6">
+        <a href="/dashboard/deposit" className="glass-card p-4 flex items-center gap-3 group cursor-pointer hover:border-emerald-500/20 transition-all">
+          <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+            <svg className="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <g><path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m0 0l-6-6m6 6l6-6" strokeWidth={2} /><rect x="3" y="21" width="18" height="2" rx="1" fill="currentColor" /></g>
+            </svg>
+          </div>
+          <div>
+            <p className="text-sm font-bold text-emerald-400">Dépôt</p>
+            <p className="text-[11px] text-gray-500">Recharger mon compte</p>
+          </div>
+          <svg className="w-4 h-4 text-gray-600 ml-auto group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+        </a>
+        <a href="/dashboard/withdraw" className="glass-card p-4 flex items-center gap-3 group cursor-pointer hover:border-flame-500/20 transition-all">
+          <div className="w-10 h-10 rounded-xl bg-flame-500/10 border border-flame-500/20 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+            <svg className="w-5 h-5 text-flame-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <g><path strokeLinecap="round" strokeLinejoin="round" d="M12 20V4m0 0L6 10m6-6l6 6" strokeWidth={2} /><rect x="3" y="1" width="18" height="2" rx="1" fill="currentColor" /></g>
+            </svg>
+          </div>
+          <div>
+            <p className="text-sm font-bold text-flame-400">Retrait</p>
+            <p className="text-[11px] text-gray-500">Retirer mes gains</p>
+          </div>
+          <svg className="w-4 h-4 text-gray-600 ml-auto group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+        </a>
+      </div>
+
+      {/* Info Card */}
       <div className="glass-card p-5 mb-4">
         {edit ? (
           <div className="space-y-3">

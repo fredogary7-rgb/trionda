@@ -48,6 +48,28 @@ export default function DashboardPage() {
         <WalletCard label="Gains totaux" value={fmt(gains)} color="from-emerald-500 to-green-500" />
       </div>
 
+      {/* Quick Actions: Dépôt / Retrait */}
+      <div className="grid grid-cols-2 gap-3 mb-6">
+        <QuickAction
+          href="/dashboard/deposit"
+          icon="deposit"
+          label="Dépôt"
+          desc="Recharger mon compte"
+          color="text-emerald-400"
+          bg="bg-emerald-500/10"
+          border="border-emerald-500/20"
+        />
+        <QuickAction
+          href="/dashboard/withdraw"
+          icon="withdraw"
+          label="Retrait"
+          desc="Retirer mes gains"
+          color="text-flame-400"
+          bg="bg-flame-500/10"
+          border="border-flame-500/20"
+        />
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
           <PlansSection plans={d.plans} />
@@ -198,5 +220,42 @@ function TransactionsSection({ transactions }: { transactions: any[] }) {
         })}
       </div>
     </Section>
+  );
+}
+/* ── Quick Action Card ── */
+function QuickAction({ href, icon, label, desc, color, bg, border }: {
+  href: string; icon: string; label: string; desc: string;
+  color: string; bg: string; border: string;
+}) {
+  const icons: Record<string, React.ReactNode> = {
+    deposit: (
+      <g>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m0 0l-6-6m6 6l6-6" strokeWidth={2} />
+        <rect x="3" y="21" width="18" height="2" rx="1" fill="currentColor" />
+      </g>
+    ),
+    withdraw: (
+      <g>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 20V4m0 0L6 10m6-6l6 6" strokeWidth={2} />
+        <rect x="3" y="1" width="18" height="2" rx="1" fill="currentColor" />
+      </g>
+    ),
+  };
+
+  return (
+    <a href={href} className={`glass-card p-4 flex items-center gap-4 group cursor-pointer hover:${border} transition-all`}>
+      <div className={`w-10 h-10 rounded-xl ${bg} ${border} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform`}>
+        <svg className={`w-5 h-5 ${color}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          {icons[icon]}
+        </svg>
+      </div>
+      <div>
+        <p className={`text-sm font-bold ${color}`}>{label}</p>
+        <p className="text-[11px] text-gray-500">{desc}</p>
+      </div>
+      <svg className="w-4 h-4 text-gray-600 ml-auto group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+      </svg>
+    </a>
   );
 }
