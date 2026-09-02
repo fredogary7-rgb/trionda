@@ -54,6 +54,10 @@ export default function ContactButtons() {
           <a href="/dashboard/terms" className="text-xs text-gray-400 hover:text-brand-600 transition-colors">
             Politique d&apos;utilisation
           </a>
+          <span className="text-gray-300 mx-2">·</span>
+          <a href="/dashboard/wheel" className="text-xs text-amber-500 hover:text-amber-600 transition-colors font-medium">
+            🎡 Lucky Wheel
+          </a>
         </div>
       </div>
   );
