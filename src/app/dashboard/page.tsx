@@ -28,7 +28,6 @@ export default function DashboardPage() {
   }
 
   const d = data!;
-  const fmt = (n: number) => n.toLocaleString("fr-FR") + " FCFA";
   const balance = parseFloat(d.wallet.balance || "0");
   const invested = parseFloat(d.wallet.totalInvested || "0");
   const gains = parseFloat(d.wallet.totalGains || "0");
@@ -43,9 +42,27 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-        <WalletCard label="Solde disponible" value={fmt(balance)} color="from-primary-500 to-accent-500" />
-        <WalletCard label="Total investi" value={fmt(invested)} color="from-gold-500 to-amber-500" />
-        <WalletCard label="Gains totaux" value={fmt(gains)} color="from-emerald-500 to-green-500" />
+        <WalletCard
+          icon="wallet"
+          label="Solde disponible"
+          amount={balance}
+          color="blue"
+          hint="Rechargeable"
+        />
+        <WalletCard
+          icon="chart"
+          label="Total investi"
+          amount={invested}
+          color="gold"
+          hint="En cours"
+        />
+        <WalletCard
+          icon="gains"
+          label="Gains totaux"
+          amount={gains}
+          color="green"
+          hint="Cumulés"
+        />
       </div>
 
       {/* Quick Actions: Dépôt / Retrait */}
@@ -83,14 +100,80 @@ export default function DashboardPage() {
     </div>
   );
 }
-/* ── Wallet Card ── */
-function WalletCard({ label, value, color }: { label: string; value: string; color: string }) {
+function WalletCard({ icon, label, amount, color, hint }: {
+  icon: string; label: string; amount: number; color: "blue" | "gold" | "green"; hint: string;
+}) {
+  const gradients: Record<string, string> = {
+    blue: "from-primary-500/20 via-primary-500/5 to-transparent",
+    gold: "from-gold-500/20 via-gold-500/5 to-transparent",
+    green: "from-emerald-500/20 via-emerald-500/5 to-transparent",
+  };
+  const glows: Record<string, string> = {
+    blue: "bg-primary-500/20",
+    gold: "bg-gold-500/20",
+    green: "bg-emerald-500/20",
+  };
+  const iconsBg: Record<string, string> = {
+    blue: "bg-primary-500/15",
+    gold: "bg-gold-500/15",
+    green: "bg-emerald-500/15",
+  };
+  const iconsBorder: Record<string, string> = {
+    blue: "border-primary-500/20",
+    gold: "border-gold-500/20",
+    green: "border-emerald-500/20",
+  };
+  const textColors: Record<string, string> = {
+    blue: "text-primary-400",
+    gold: "text-gold-400",
+    green: "text-emerald-400",
+  };
+  const glowRings: Record<string, string> = {
+    blue: "bg-primary-500/10",
+    gold: "bg-gold-500/10",
+    green: "bg-emerald-500/10",
+  };
+
+  const svgIcons: Record<string, React.ReactNode> = {
+    wallet: <path strokeLinecap="round" strokeLinejoin="round" d="M3 10h18M3 14h18M7 10v8m4-6v6m2-4v4m4-2v2" strokeWidth={2} />,
+    chart: <><path strokeLinecap="round" strokeLinejoin="round" d="M3 17l6-6 4 4 8-8" strokeWidth={2} /><circle cx="19" cy="5" r="2" fill="currentColor" stroke="none" /></>,
+    gains: <><path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m0 0l-6-6m6 6l6-6" strokeWidth={2} /><rect x="3" y="21" width="18" height="2" rx="1" fill="currentColor" opacity="0.5" /></>,
+  };
+
   return (
-    <div className="glass-card-glow p-5 relative overflow-hidden group">
-      <div className={`absolute -right-4 -top-4 w-20 h-20 rounded-full bg-gradient-to-br ${color} opacity-10 blur-2xl group-hover:opacity-20 transition-opacity`} />
+    <div className="glass-card p-4 sm:p-5 relative overflow-hidden group cursor-default">
+      {/* Fond dégradé */}
+      <div className={`absolute inset-0 bg-gradient-to-br ${gradients[color]} opacity-40`} />
+      {/* Grand cercle glow en arrière-plan */}
+      <div className={`absolute -right-6 -bottom-6 w-28 h-28 rounded-full ${glowRings[color]} blur-2xl group-hover:scale-125 transition-transform duration-700`} />
+      {/* Petit cercle décoratif */}
+      <div className={`absolute -right-2 -top-2 w-16 h-16 rounded-full ${glows[color]} blur-xl`} />
+
       <div className="relative z-10">
-        <p className="text-xs text-gray-500 mb-2 uppercase tracking-wider">{label}</p>
-        <p className="text-xl font-black text-white">{value}</p>
+        {/* Icône + label */}
+        <div className="flex items-center gap-2.5 mb-3">
+          <div className={`w-8 h-8 rounded-lg ${iconsBg[color]} ${iconsBorder[color]} border flex items-center justify-center`}>
+            <svg className={`w-4 h-4 ${textColors[color]}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              {svgIcons[icon]}
+            </svg>
+          </div>
+          <div>
+            <p className="text-[11px] text-gray-500 font-medium uppercase tracking-wider leading-none">{label}</p>
+            <p className={`text-[10px] ${textColors[color]} opacity-70`}>{hint}</p>
+          </div>
+        </div>
+
+        {/* Montant avec séparateur de milliers */}
+        <p className={`text-xl sm:text-2xl font-black ${textColors[color]} tracking-tight`}>
+          {amount.toLocaleString("fr-FR").replace(/\u202f/g, "\u00A0")}
+          <span className="text-[10px] font-medium text-gray-600 ml-1">FCFA</span>
+        </p>
+
+        {/* Barre de progression décorative */}
+        <div className="mt-3 w-full h-1 rounded-full bg-white/[0.03] overflow-hidden">
+          <div className={`h-full rounded-full ${amount > 0 ? textColors[color].replace("text-", "bg-") : "bg-transparent"}`}
+            style={{ width: `${amount > 0 ? 40 + Math.min(60, Math.round(amount / 50000 * 60)) : 0}%`, transition: "width 1.5s ease-out" }} />
+        </div>
       </div>
     </div>
   );
