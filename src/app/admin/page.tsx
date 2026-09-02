@@ -53,7 +53,7 @@ export default function AdminPage() {
   };
 
   if (status === "loading" || loading) {
-    return <div className="p-8 flex justify-center"><div className="animate-spin w-6 h-6 border-2 border-accent-400 border-t-transparent rounded-full" /></div>;
+    return <div className="p-8 flex justify-center"><div className="animate-spin w-6 h-6 border-2 border-brand-500 border-t-transparent rounded-full" /></div>;
   }
 
   const fmt = (n: any) => parseFloat(n || "0").toLocaleString("fr-FR");
@@ -62,10 +62,10 @@ export default function AdminPage() {
     <div className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <p className="text-sm text-gray-500">Panneau d&apos;administration</p>
-          <h1 className="text-2xl font-black text-white">🛡️ Admin</h1>
+          <p className="text-sm text-gray-400">Panneau d&apos;administration</p>
+          <h1 className="text-2xl font-black text-gray-900">🛡️ Admin</h1>
         </div>
-        <div className="text-xs text-gray-500">{data?.totalUsers} utilisateurs</div>
+        <div className="text-xs text-gray-400">{data?.totalUsers} utilisateurs</div>
       </div>
 
       {msg.text && (
@@ -77,7 +77,7 @@ export default function AdminPage() {
         {(["users","deposits","withdrawals","credit"] as const).map(t => (
           <button key={t} onClick={() => setTab(t)}
             className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-colors ${
-              tab === t ? "bg-accent-400/10 text-accent-400 border border-accent-400/20" : "bg-[#0F1525] text-gray-400 hover:text-white"
+              tab === t ? "bg-brand-500/10 text-brand-500 border border-brand-500/20" : "bg-white text-gray-400 hover:text-gray-900"
             }`}>
             {t === "users" && `👥 Utilisateurs (${data?.users?.length || 0})`}
             {t === "deposits" && `💳 Dépôts (${data?.pendingDeposits?.length || 0})`}
@@ -88,13 +88,13 @@ export default function AdminPage() {
       </div>
 {/* Users tab */}
       {tab === "users" && (
-        <div className="glass-card p-5">
+        <div className="card p-5">
           <div className="space-y-2 max-h-[60vh] overflow-y-auto">
             {data?.users?.map((u: any) => (
-              <div key={u.id} className="flex items-center justify-between p-3 rounded-lg bg-[#0A0F1E]">
+              <div key={u.id} className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-white truncate">{u.firstName} {u.lastName}</p>
-                  <p className="text-[11px] text-gray-500">{u.phone}{u.email ? ` · ${u.email}` : ""}</p>
+                  <p className="text-sm font-medium text-gray-900 truncate">{u.firstName} {u.lastName}</p>
+                  <p className="text-[11px] text-gray-400">{u.phone}{u.email ? ` · ${u.email}` : ""}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   {u.isBanned && <span className="text-[10px] px-1.5 py-0.5 rounded bg-flame-500/10 text-flame-400">Banni</span>}
@@ -113,16 +113,16 @@ export default function AdminPage() {
 
       {/* Deposits tab */}
       {tab === "deposits" && (
-        <div className="glass-card p-5">
+        <div className="card p-5">
           {data?.pendingDeposits?.length === 0 ? (
-            <p className="text-sm text-gray-500 text-center py-6">Aucun dépôt en attente.</p>
+            <p className="text-sm text-gray-400 text-center py-6">Aucun dépôt en attente.</p>
           ) : (
             <div className="space-y-2 max-h-[60vh] overflow-y-auto">
               {data?.pendingDeposits?.map((tx: any) => (
-                <div key={tx.id} className="flex items-center justify-between p-3 rounded-lg bg-[#0A0F1E]">
+                <div key={tx.id} className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
                   <div>
-                    <p className="text-sm font-medium text-white">{tx.user.firstName} {tx.user.lastName}</p>
-                    <p className="text-[11px] text-gray-500">{tx.description}</p>
+                    <p className="text-sm font-medium text-gray-900">{tx.user.firstName} {tx.user.lastName}</p>
+                    <p className="text-[11px] text-gray-400">{tx.description}</p>
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="text-sm font-bold text-emerald-400">+{fmt(tx.amount)} FCFA</span>
@@ -141,16 +141,16 @@ export default function AdminPage() {
 
       {/* Withdrawals tab */}
       {tab === "withdrawals" && (
-        <div className="glass-card p-5">
+        <div className="card p-5">
           {data?.pendingWithdrawals?.length === 0 ? (
-            <p className="text-sm text-gray-500 text-center py-6">Aucun retrait en attente.</p>
+            <p className="text-sm text-gray-400 text-center py-6">Aucun retrait en attente.</p>
           ) : (
             <div className="space-y-2 max-h-[60vh] overflow-y-auto">
               {data?.pendingWithdrawals?.map((tx: any) => (
-                <div key={tx.id} className="flex items-center justify-between p-3 rounded-lg bg-[#0A0F1E]">
+                <div key={tx.id} className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
                   <div>
-                    <p className="text-sm font-medium text-white">{tx.user.firstName} {tx.user.lastName}</p>
-                    <p className="text-[11px] text-gray-500">{tx.description}</p>
+                    <p className="text-sm font-medium text-gray-900">{tx.user.firstName} {tx.user.lastName}</p>
+                    <p className="text-[11px] text-gray-400">{tx.description}</p>
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="text-sm font-bold text-flame-400">{fmt(Math.abs(tx.amount))} FCFA</span>
@@ -169,20 +169,20 @@ export default function AdminPage() {
 
       {/* Credit tab */}
       {tab === "credit" && (
-        <div className="glass-card p-5">
+        <div className="card p-5">
           <form onSubmit={handleCredit} className="space-y-4">
             <div>
-              <label className="block text-xs text-gray-500 mb-1">ID utilisateur</label>
+              <label className="block text-xs text-gray-400 mb-1">ID utilisateur</label>
               <input value={creditForm.userId} onChange={e => setCreditForm({ ...creditForm, userId: e.target.value })}
                 className="glass-input py-2.5 text-sm" placeholder="UUID de l'utilisateur" />
             </div>
             <div>
-              <label className="block text-xs text-gray-500 mb-1">Montant (+ crédit, - débit)</label>
+              <label className="block text-xs text-gray-400 mb-1">Montant (+ crédit, - débit)</label>
               <input value={creditForm.amount} onChange={e => setCreditForm({ ...creditForm, amount: e.target.value })}
                 className="glass-input py-2.5 text-sm" placeholder="+10000 ou -5000" type="number" />
             </div>
             <div>
-              <label className="block text-xs text-gray-500 mb-1">Description</label>
+              <label className="block text-xs text-gray-400 mb-1">Description</label>
               <input value={creditForm.description} onChange={e => setCreditForm({ ...creditForm, description: e.target.value })}
                 className="glass-input py-2.5 text-sm" placeholder="Motif de l'opération" />
             </div>

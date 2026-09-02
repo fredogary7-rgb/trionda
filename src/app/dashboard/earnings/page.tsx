@@ -15,7 +15,7 @@ export default function EarningsPage() {
   }, []);
 
   if (loading) {
-    return <div className="max-w-7xl mx-auto p-6 flex justify-center py-20"><div className="animate-spin w-6 h-6 border-2 border-accent-400 border-t-transparent rounded-full" /></div>;
+    return <div className="max-w-7xl mx-auto p-6 flex justify-center py-20"><div className="animate-spin w-6 h-6 border-2 border-brand-500 border-t-transparent rounded-full" /></div>;
   }
 
   const investments = data?.investments || [];
@@ -26,29 +26,29 @@ export default function EarningsPage() {
   return (
     <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
       <div className="mb-6">
-        <p className="text-sm text-gray-500">Historique et suivi</p>
-        <h2 className="text-xl font-black text-white">📈 Mes gains</h2>
+        <p className="text-sm text-gray-400">Historique et suivi</p>
+        <h2 className="text-xl font-black text-gray-900">📈 Mes gains</h2>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-        <div className="glass-card p-4 text-center">
-          <p className="text-xs text-gray-500 mb-1">Investissements actifs</p>
-          <p className="text-xl font-black text-white">{investments.filter((i: any) => i.status === "active").length}</p>
+        <div className="card p-4 text-center">
+          <p className="text-xs text-gray-400 mb-1">Investissements actifs</p>
+          <p className="text-xl font-black text-gray-900">{investments.filter((i: any) => i.status === "active").length}</p>
         </div>
-        <div className="glass-card p-4 text-center">
-          <p className="text-xs text-gray-500 mb-1">Montant actif</p>
-          <p className="text-xl font-black text-accent-400">{totalActive.toLocaleString("fr-FR")} F</p>
+        <div className="card p-4 text-center">
+          <p className="text-xs text-gray-400 mb-1">Montant actif</p>
+          <p className="text-xl font-black text-brand-500">{totalActive.toLocaleString("fr-FR")} F</p>
         </div>
-        <div className="glass-card p-4 text-center">
-          <p className="text-xs text-gray-500 mb-1">Gains cumulés</p>
+        <div className="card p-4 text-center">
+          <p className="text-xs text-gray-400 mb-1">Gains cumulés</p>
           <p className="text-xl font-black text-emerald-400">{totalGains.toLocaleString("fr-FR")} F</p>
         </div>
       </div>
 {/* Active investments */}
-      <div className="glass-card p-5 mb-6">
-        <h3 className="text-sm font-semibold text-gray-300 mb-4">Mes investissements</h3>
+      <div className="card p-5 mb-6">
+        <h3 className="text-sm font-semibold text-gray-700 mb-4">Mes investissements</h3>
         {investments.length === 0 ? (
-          <p className="text-sm text-gray-500 text-center py-6">Aucun investissement. <a href="/dashboard/invest" className="text-accent-400">Investir →</a></p>
+          <p className="text-sm text-gray-400 text-center py-6">Aucun investissement. <a href="/dashboard/invest" className="text-brand-500">Investir →</a></p>
         ) : (
           <div className="space-y-3">
             {investments.map((inv: any) => {
@@ -57,16 +57,16 @@ export default function EarningsPage() {
               const daysLeft = Math.max(0, Math.ceil((new Date(inv.endDate).getTime() - Date.now()) / 86400000));
               return (
                 <div key={inv.id} onClick={() => router.push(`/dashboard/invest/${inv.id}`)}
-                  className="p-3 rounded-lg bg-[#0A0F1E] border border-white/[0.04] hover:border-accent-400/20 cursor-pointer transition-all">
+                  className="p-3 rounded-lg bg-gray-50 border border-gray-100 hover:border-brand-500/20 cursor-pointer transition-all">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-medium text-white">{inv.plan.name}</span>
+                    <span className="text-xs font-medium text-gray-900">{inv.plan.name}</span>
                     <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400">{inv.status === "active" ? "Actif" : inv.status}</span>
                   </div>
-                  <div className="flex justify-between text-xs text-gray-500 mb-1.5">
+                  <div className="flex justify-between text-xs text-gray-400 mb-1.5">
                     <span>{amount.toLocaleString("fr-FR")} FCFA</span><span>{daysLeft}j restants</span>
                   </div>
-                  <div className="w-full h-1 rounded-full bg-white/[0.05] overflow-hidden">
-                    <div className="h-full rounded-full bg-accent-400 transition-all" style={{ width: `${pct}%` }} />
+                  <div className="w-full h-1 rounded-full bg-gray-100/[0.05] overflow-hidden">
+                    <div className="h-full rounded-full bg-brand-500 transition-all" style={{ width: `${pct}%` }} />
                   </div>
                 </div>
               );
@@ -76,10 +76,10 @@ export default function EarningsPage() {
       </div>
 
       {/* Transaction history */}
-      <div className="glass-card p-5">
-        <h3 className="text-sm font-semibold text-gray-300 mb-4">Historique des transactions</h3>
+      <div className="card p-5">
+        <h3 className="text-sm font-semibold text-gray-700 mb-4">Historique des transactions</h3>
         {txFiltered.length === 0 ? (
-          <p className="text-sm text-gray-500 text-center py-4">Aucune transaction</p>
+          <p className="text-sm text-gray-400 text-center py-4">Aucune transaction</p>
         ) : (
           <div className="space-y-2">
             {txFiltered.map((tx: any) => {
@@ -93,8 +93,8 @@ export default function EarningsPage() {
                     </svg>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs text-white truncate">{tx.description || tx.type}</p>
-                    <p className="text-[10px] text-gray-600">{date}</p>
+                    <p className="text-xs text-gray-900 truncate">{tx.description || tx.type}</p>
+                    <p className="text-[10px] text-gray-400">{date}</p>
                   </div>
                   <span className={`text-xs font-semibold ${isCredit ? "text-emerald-400" : "text-flame-400"}`}>
                     {isCredit ? "+" : ""}{parseFloat(tx.amount).toLocaleString("fr-FR")} F

@@ -44,7 +44,7 @@ export default function DashboardPage() {
 function Greeting({ firstName, lastName }: { firstName: string; lastName: string }) {
   return (
     <div className="mb-4">
-      <p className="text-sm text-gray-500 mb-0.5">Bienvenue dans votre espace</p>
+      <p className="text-sm text-gray-400 mb-0.5">Bienvenue dans votre espace</p>
       <h1 className="text-xl font-extrabold text-gray-900">{firstName} <span className="text-brand-600">{lastName}</span></h1>
     </div>
   );
@@ -59,19 +59,19 @@ function WalletCard({ balance, name, code }: { balance: number; name: string; co
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full border border-white/5" />
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-[11px] text-white/60 font-medium uppercase tracking-wider">Compte principal</span>
-          <span className="text-xs text-white/70 font-medium bg-white/10 px-2.5 py-0.5 rounded-full flex items-center gap-1.5">
+          <span className="text-[11px] text-gray-900/60 font-medium uppercase tracking-wider">Compte principal</span>
+          <span className="text-xs text-gray-900/70 font-medium bg-white/10 px-2.5 py-0.5 rounded-full flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-emerald-400" />🇧🇫
           </span>
         </div>
-        <p className="text-white/90 text-sm font-semibold mb-4">{name}</p>
-        <p className="text-[11px] text-white/50 uppercase tracking-wider mb-0.5">Solde disponible</p>
-        <p className="text-3xl font-black text-white tracking-tight mb-1">
+        <p className="text-gray-900/90 text-sm font-semibold mb-4">{name}</p>
+        <p className="text-[11px] text-gray-900/50 uppercase tracking-wider mb-0.5">Solde disponible</p>
+        <p className="text-3xl font-black text-gray-900 tracking-tight mb-1">
           {balance.toLocaleString("fr-FR").replace(/\u202f/g, "\u00A0")}
-          <span className="text-sm font-medium text-white/60 ml-1.5">FCFA</span>
+          <span className="text-sm font-medium text-gray-900/60 ml-1.5">FCFA</span>
         </p>
         <div className="flex items-center gap-3 mt-3 pt-3 border-t border-white/10">
-          <p className="text-xs text-white/50">Code: {code}</p>
+          <p className="text-xs text-gray-900/50">Code: {code}</p>
         </div>
       </div>
     </div>
@@ -117,7 +117,7 @@ function Sections({ plans, investments, referral, transactions }: {
                   <span className="text-[10px] font-bold text-brand-600 bg-brand-100 px-1.5 py-0.5 rounded-full">+{p.dailyReturn}%/j</span>
                 </div>
                 <div className="flex items-end justify-between">
-                  <p className="text-[10px] text-gray-500">Dès <span className="text-gray-900 font-semibold">{parseFloat(p.minAmount).toLocaleString("fr-FR")} F</span></p>
+                  <p className="text-[10px] text-gray-400">Dès <span className="text-gray-900 font-semibold">{parseFloat(p.minAmount).toLocaleString("fr-FR")} F</span></p>
                   <svg className="w-3.5 h-3.5 text-brand-400 opacity-0 group-hover:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                 </div>
               </a>
@@ -137,7 +137,7 @@ function Sections({ plans, investments, referral, transactions }: {
                     <span className="text-xs font-semibold text-gray-900">{inv.plan.name}</span>
                     <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-600">{inv.status === "active" ? "Actif" : inv.status}</span>
                   </div>
-                  <div className="flex justify-between text-[11px] text-gray-500 mb-1.5">
+                  <div className="flex justify-between text-[11px] text-gray-400 mb-1.5">
                     <span>{parseFloat(inv.amount).toLocaleString("fr-FR")} FCFA</span>
                   </div>
                   <div className="w-full h-1 rounded-full bg-gray-200 overflow-hidden">
