@@ -14,28 +14,42 @@ interface CreatePaymentParams {
   metadata?: Record<string, string>;
 }
 
-export async function createSendavaPayment(params: CreatePaymentParams) {
-  const res = await fetch(`${BASE_URL}/v1/create-payment`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${process.env.SENDAVAPAY_SDK_KEY}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(params),
-  });
-  return res.json();
+async function postSendava(path: string, body: unknown, timeoutMs = 12000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const res = await fetch(`${BASE_URL}${path}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.SENDAVAPAY_SDK_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+      signal: controller.signal,
+    });
+    const text = await res.text();
+    try {
+      return JSON.parse(text);
+    } catch {
+      return { success: false, error: `Réponse invalide (statut ${res.status})` };
+    }
+  } catch (err: any) {
+    console.error("SendavaPay fetch error:", err?.name, err?.message);
+    return {
+      success: false,
+      error: err?.name === "AbortError" ? "Délai dépassé (SendavaPay injoignable)" : "Erreur réseau",
+    };
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
-export async function verifySendavaPayment(reference: string) {
-  const res = await fetch(`${BASE_URL}/v1/verify-payment`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${process.env.SENDAVAPAY_SDK_KEY}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ reference }),
-  });
-  return res.json();
+export function createSendavaPayment(params: CreatePaymentParams) {
+  return postSendava("/v1/create-payment", params);
+}
+
+export function verifySendavaPayment(reference: string) {
+  return postSendava("/v1/verify-payment", { reference });
 }
 
 export function verifyWebhookSignature(rawBody: string, signature: string | null): boolean {

@@ -10,6 +10,7 @@ export default function PayPage() {
   const [amount, setAmount] = useState(7000);
   const [customAmount, setCustomAmount] = useState("");
   const [countryIdx, setCountryIdx] = useState(0);
+  const [operatorIdx, setOperatorIdx] = useState(0);
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
@@ -30,7 +31,7 @@ export default function PayPage() {
       const res = await fetch("/api/pay", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount, phone: `${country.dial}${cleanPhone}`, name: name || undefined }),
+        body: JSON.stringify({ amount, phone: `${country.dial}${cleanPhone}`, name: name || undefined, operator: SENDAVAPAY_SERVICES[operatorIdx].name }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -101,6 +102,26 @@ export default function PayPage() {
             </div>
 
             <div>
+              <label className="block text-xs font-medium text-gray-600 mb-2">Opérateur</label>
+              <div className="grid grid-cols-3 gap-2">
+                {SENDAVAPAY_SERVICES.map((s, i) => (
+                  <button
+                    key={s.name}
+                    type="button"
+                    onClick={() => setOperatorIdx(i)}
+                    className={`py-3 rounded-xl text-xs font-semibold transition-all border ${
+                      operatorIdx === i
+                        ? "bg-brand-500/10 border-brand-500 text-brand-500"
+                        : "bg-gray-50 border-gray-100 text-gray-900 hover:border-gray-200"
+                    }`}
+                  >
+                    {s.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
               <label className="block text-xs font-medium text-gray-600 mb-2">Numéro Mobile Money</label>
               <div className="input-light flex items-center gap-2">
                 <span className="text-gray-900 font-semibold shrink-0">{country.dial}</span>
@@ -131,21 +152,6 @@ export default function PayPage() {
               {loading ? "Redirection..." : "Payer maintenant"}
             </button>
           </form>
-
-          <div className="mt-6 pt-5 border-t border-gray-100">
-            <p className="text-xs text-gray-400 mb-3">Services acceptés</p>
-            <div className="flex flex-wrap gap-2">
-              {SENDAVAPAY_SERVICES.map((s) => (
-                <span
-                  key={s.name}
-                  className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-gray-50 text-gray-700"
-                  style={{ borderLeft: `3px solid ${s.color}` }}
-                >
-                  {s.name}
-                </span>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
     </div>

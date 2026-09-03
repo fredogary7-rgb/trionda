@@ -11,7 +11,7 @@ export async function POST(req: Request) {
   const userId = (session.user as { id: string }).id;
 
   try {
-    const { amount, phone, name, email } = await req.json();
+    const { amount, phone, name, email, operator } = await req.json();
     const amt = parseInt(amount);
     if (!amt || amt < 500) return NextResponse.json({ error: "Montant minimum 500 FCFA." }, { status: 400 });
     if (!phone) return NextResponse.json({ error: "Numéro de téléphone requis." }, { status: 400 });
@@ -30,13 +30,13 @@ export async function POST(req: Request) {
     const payment = await createSendavaPayment({
       amount: amt,
       currency: "XOF",
-      description: "Dépôt Trionda",
+      description: `Dépôt Trionda${operator ? ` - ${operator}` : ""}`,
       externalReference: tx.id,
       customerPhone: phone,
       ...(name ? { customerName: name } : {}),
       ...(email ? { customerEmail: email } : {}),
       redirectUrl: process.env.SENDAVAPAY_REDIRECT_URL || undefined,
-      metadata: { userId, txId: tx.id },
+      metadata: { userId, txId: tx.id, ...(operator ? { operator } : {}) },
     });
 
     if (!payment?.success || !payment?.data?.paymentUrl) {
