@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import PLANS from "@/data/plans";
+import TriondaBall from "@/components/TriondaBall";
 
 export default function InvestPage() {
   const router = useRouter();
@@ -105,17 +106,27 @@ export default function InvestPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         {PLANS.map((plan) => (
           <button key={plan.amount} onClick={() => { setSelected(plan); setStep("confirm"); setError(""); }}
-            className="card p-4 text-left hover:border-brand-500/30 transition-all group">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-sm font-semibold text-gray-900">{plan.name}</span>
-              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: plan.color }} />
+            className="card p-4 text-left hover:border-brand-500/30 hover:shadow-md transition-all group">
+            <div className="flex items-start justify-between gap-3 mb-2">
+              {/* Infos à gauche */}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="text-sm font-semibold text-gray-900">{plan.name}</span>
+                  <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: plan.color }} />
+                </div>
+                <p className="text-2xl font-black text-gray-900 mb-1">{plan.amount.toLocaleString("fr-FR")} <span className="text-xs text-gray-400">FCFA</span></p>
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="text-xs text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded font-semibold">+{plan.dailyReturn}%/j</span>
+                  <span className="text-xs text-gray-400">{plan.durationDays} jours</span>
+                </div>
+                <p className="text-xs text-gray-400">+{plan.totalGain.toLocaleString("fr-FR")} FCFA · ROI {plan.roi}%</p>
+              </div>
+
+              {/* Ballon à droite */}
+              <div className="shrink-0 group-hover:scale-110 transition-transform duration-300">
+                <TriondaBall color={plan.color} size={52} />
+              </div>
             </div>
-            <p className="text-2xl font-black text-gray-900 mb-1">{plan.amount.toLocaleString("fr-FR")} <span className="text-xs text-gray-400">FCFA</span></p>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-xs text-emerald-400 bg-emerald-400/10 px-1.5 py-0.5 rounded font-medium">+{plan.dailyReturn}%/j</span>
-              <span className="text-xs text-gray-400">{plan.durationDays} jours</span>
-            </div>
-            <p className="text-xs text-gray-400">+{plan.totalGain.toLocaleString("fr-FR")} FCFA · ROI {plan.roi}%</p>
           </button>
         ))}
       </div>
