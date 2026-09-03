@@ -68,7 +68,7 @@ function LoginForm() {
             <div>
               <label className="block text-xs font-medium text-gray-600 mb-1.5">Téléphone ou Email</label>
               <input id="identifier" type="text" value={identifier} onChange={e => setIdentifier(e.target.value)}
-                className="input-light" placeholder="+226 XX XX XX XX ou email" required />
+                className="input-light" placeholder="70 12 34 56 ou email" required />
             </div>
             <div>
               <label className="block text-xs font-medium text-gray-600 mb-1.5">Mot de passe</label>

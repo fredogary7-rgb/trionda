@@ -5,6 +5,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import BrandPanel from "@/components/BrandPanel";
 
+const DIAL_CODE = "+226";
+
 function RegisterForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -16,14 +18,15 @@ function RegisterForm() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault(); setError("");
-    if (!f.ph || f.ph.replace(/[\s.-]/g,"").length < 8) { setError("Telephone invalide."); return; }
+    const phone = f.ph.replace(/[\s.-]/g, "");
+    if (!phone || phone.length !== 8) { setError("Numero invalide : 8 chiffres sans indicatif."); return; }
     if (f.pw !== f.cp) { setError("Mots de passe differents."); return; }
     if (f.pw.length < 6) { setError("6 caracteres min."); return; }
     setLoading(true);
     try {
       const r = await fetch("/api/auth/register", {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ firstName: f.fn, lastName: f.ln, phone: f.ph, email: f.em || null, country: f.co, password: f.pw, promoCode: f.pc || null }),
+        body: JSON.stringify({ firstName: f.fn, lastName: f.ln, phone: DIAL_CODE + phone, email: f.em || null, country: f.co, password: f.pw, promoCode: f.pc || null }),
       });
       const d = await r.json();
       if (!r.ok) { setError(d.error || "Erreur"); return; }
@@ -59,7 +62,7 @@ function RegisterForm() {
                 <div><label className="block text-xs font-medium text-gray-600 mb-1">Prenom</label><input type="text" value={f.fn} onChange={up("fn")} className="input-light" placeholder="Jean" required /></div>
                 <div><label className="block text-xs font-medium text-gray-600 mb-1">Nom</label><input type="text" value={f.ln} onChange={up("ln")} className="input-light" placeholder="Ouedraogo" required /></div>
               </div>
-              <div><label className="block text-xs font-medium text-gray-600 mb-1">Telephone *</label><input type="tel" value={f.ph} onChange={up("ph")} className="input-light" placeholder="+226 XX XX XX XX" required /></div>
+              <div><label className="block text-xs font-medium text-gray-600 mb-1">Telephone *</label><div className="input-light flex items-center gap-2 focus-within:border-brand-400 focus-within:ring-2 focus-within:ring-brand-400/15 focus-within:bg-white"><span className="text-gray-900 font-semibold shrink-0">+226</span><span className="text-gray-300">|</span><input type="tel" value={f.ph} onChange={up("ph")} className="bg-transparent outline-none w-full" placeholder="70 12 34 56" required /></div></div>
               <div><label className="block text-xs font-medium text-gray-600 mb-1">Pays</label><div className="input-light flex items-center gap-2 cursor-default"><span className="text-lg">🇧🇫</span><span className="text-gray-900 font-medium">Burkina Faso</span></div></div>
               <div className="relative">
                 <label className="block text-xs font-medium text-gray-600 mb-1">Code promo</label>

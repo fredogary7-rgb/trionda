@@ -17,9 +17,10 @@ export const authOptions: NextAuthOptions = {
         }
 
         // Chercher par téléphone OU email
-        const isPhone = /^\+?\d{8,15}$/.test(credentials.identifier.replace(/[\s-]/g, ""));
+        const clean = credentials.identifier.replace(/[\s.-]/g, "");
+        const isPhone = /^\+?\d{8,15}$/.test(clean);
         const user = isPhone
-          ? await prisma.user.findUnique({ where: { phone: credentials.identifier.replace(/[\s-]/g, "") } })
+          ? await prisma.user.findUnique({ where: { phone: clean.startsWith("+") ? clean : `+226${clean}` } })
           : await prisma.user.findUnique({ where: { email: credentials.identifier } });
 
         if (!user) {
