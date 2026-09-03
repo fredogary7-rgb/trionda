@@ -65,23 +65,26 @@ if (loading) {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white shadow-lg z-10 flex items-center justify-center border-2 border-gray-200">
           <span className="text-sm font-black text-brand-600">GO</span>
         </div>
-        <div className="w-full h-full rounded-full border-4 border-white shadow-xl"
+        <div className="relative w-full h-full rounded-full border-4 border-white shadow-xl overflow-hidden"
           style={{
-            background: `conic-gradient(${conic})`,
             transform: `rotate(${rot}deg)`,
             transition: spinning ? "transform 5s cubic-bezier(0.17,0.67,0.12,0.99)" : "none",
           }}
-        />
-        {SEG.map((s, i) => {
-          const a = (i * 45 + 22.5) * (Math.PI / 180);
-          const x = 50 + 36 * Math.cos(a - Math.PI / 2);
-          const y = 50 + 36 * Math.sin(a - Math.PI / 2);
-          const d = ["#F59E0B","#F97316","#EF4444","#8B5CF6"].includes(s.c);
-          return <span key={i} className="absolute text-[9px] font-bold pointer-events-none"
-            style={{ left: x + "%", top: y + "%", transform: "translate(-50%,-50%)", color: d ? "#fff" : "#1e293b" }}>
-            {s.l}
-          </span>;
-        })}
+        >
+          {/* Fond conic qui tourne */}
+          <div className="w-full h-full rounded-full" style={{ background: `conic-gradient(${conic})` }} />
+          {/* Labels qui tournent avec le fond */}
+          {SEG.map((s, i) => {
+            const a = (i * 45 + 22.5) * (Math.PI / 180);
+            const x = 50 + 36 * Math.cos(a - Math.PI / 2);
+            const y = 50 + 36 * Math.sin(a - Math.PI / 2);
+            const d = ["#F59E0B","#F97316","#EF4444","#8B5CF6"].includes(s.c);
+            return <span key={i} className="absolute text-[9px] font-bold pointer-events-none"
+              style={{ left: x + "%", top: y + "%", transform: "translate(-50%,-50%)", color: d ? "#fff" : "#1e293b" }}>
+              {s.l}
+            </span>;
+          })}
+        </div>
       </div>
 {msg.m && (
         <div className={`mb-4 p-3 rounded-xl text-sm font-medium ${msg.t === "error" ? "bg-flame-50 text-flame-600" : "bg-emerald-50 text-emerald-600"}`}>{msg.m}</div>
