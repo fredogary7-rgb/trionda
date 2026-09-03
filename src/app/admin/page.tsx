@@ -13,7 +13,7 @@ export default function AdminPage() {
   const [msg, setMsg] = useState({ type: "", text: "" });
 
   // Credit/debit form
-  const [creditForm, setCreditForm] = useState({ userId: "", amount: "", description: "" });
+  const [creditForm, setCreditForm] = useState({ phone: "", amount: "", description: "" });
 
   useEffect(() => {
     if (status === "unauthenticated") redirect("/login");
@@ -43,11 +43,11 @@ export default function AdminPage() {
 
   const handleCredit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!creditForm.userId || !creditForm.amount) return;
+    if (!creditForm.phone || !creditForm.amount) return;
     setActing("credit"); setMsg({ type: "", text: "" });
     const res = await fetch("/api/admin/actions", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(creditForm) });
     const j = await res.json();
-    if (j.success) { setMsg({ type: "success", text: "Opération réussie !" }); setCreditForm({ userId: "", amount: "", description: "" }); fetchData(); }
+    if (j.success) { setMsg({ type: "success", text: "Opération réussie !" }); setCreditForm({ phone: "", amount: "", description: "" }); fetchData(); }
     else setMsg({ type: "error", text: j.error || "Erreur" });
     setActing("");
   };
@@ -172,9 +172,9 @@ export default function AdminPage() {
         <div className="card p-5">
           <form onSubmit={handleCredit} className="space-y-4">
             <div>
-              <label className="block text-xs text-gray-400 mb-1">ID utilisateur</label>
-              <input value={creditForm.userId} onChange={e => setCreditForm({ ...creditForm, userId: e.target.value })}
-                className="input-light py-2.5 text-sm" placeholder="UUID de l'utilisateur" />
+              <label className="block text-xs text-gray-400 mb-1">Numéro de téléphone</label>
+              <input value={creditForm.phone} onChange={e => setCreditForm({ ...creditForm, phone: e.target.value })}
+                className="input-light py-2.5 text-sm" placeholder="70 12 34 56" />
             </div>
             <div>
               <label className="block text-xs text-gray-400 mb-1">Montant (+ crédit, - débit)</label>
