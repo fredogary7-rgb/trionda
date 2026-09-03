@@ -124,7 +124,7 @@ export default function InvestPage() {
 
               {/* Ballon à droite */}
               <div className="shrink-0 group-hover:scale-110 transition-transform duration-300">
-                <TriondaBall color={plan.color} size={52} />
+                <TriondaBall color={plan.color} size={72} />
               </div>
             </div>
           </button>
