@@ -61,7 +61,6 @@ return (
               </div>
               <div><label className="block text-xs font-medium text-gray-600 mb-1">Telephone *</label><input type="tel" value={f.ph} onChange={up("ph")} className="input-light" placeholder="+226 XX XX XX XX" required /></div>
               <div><label className="block text-xs font-medium text-gray-600 mb-1">Pays</label><div className="input-light flex items-center gap-2 cursor-default"><span className="text-lg">🇧🇫</span><span className="text-gray-900 font-medium">Burkina Faso</span></div></div>
-              <div><label className="block text-xs font-medium text-gray-600 mb-1">Email (optionnel)</label><input type="email" value={f.em} onChange={up("em")} className="input-light" placeholder="vous@exemple.com" /></div>
               <div className="relative">
                 <label className="block text-xs font-medium text-gray-600 mb-1">Code promo</label>
                 <input type="text" value={f.pc} onChange={up("pc")} className="input-light" placeholder="Ex: TRD-JO-ABCD" />
