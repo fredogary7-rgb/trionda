@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 
 const SEG = [
   { l: "0 FCFA", c: "#CBD5E1", a: 0 },
-  { l: "100 FCFA", c: "#93C5FD", a: 100 },
-  { l: "200 FCFA", c: "#60A5FA", a: 200 },
-  { l: "500 FCFA", c: "#3B82F6", a: 500 },
-  { l: "1k", c: "#F59E0B", a: 1000 },
-  { l: "2k", c: "#F97316", a: 2000 },
-  { l: "5k", c: "#EF4444", a: 5000 },
-  { l: "10k", c: "#8B5CF6", a: 10000 },
+  { l: "25 FCFA", c: "#93C5FD", a: 25 },
+  { l: "50 FCFA", c: "#60A5FA", a: 50 },
+  { l: "100 FCFA", c: "#3B82F6", a: 100 },
+  { l: "200", c: "#F59E0B", a: 200 },
+  { l: "300", c: "#F97316", a: 300 },
+  { l: "400", c: "#EF4444", a: 400 },
+  { l: "500", c: "#8B5CF6", a: 500 },
 ];
 
 export default function WheelPage() {
