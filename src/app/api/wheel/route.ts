@@ -6,13 +6,13 @@ import { prisma } from "@/lib/prisma";
 // Prix avec poids (plus le poids est élevé, plus la chance est grande)
 const PRIZES = [
   { label: "0 FCFA", amount: 0, weight: 40, color: "#CBD5E1" },
-  { label: "100 FCFA", amount: 100, weight: 25, color: "#93C5FD" },
-  { label: "200 FCFA", amount: 200, weight: 15, color: "#60A5FA" },
-  { label: "500 FCFA", amount: 500, weight: 10, color: "#3B82F6" },
-  { label: "1 000 FCFA", amount: 1000, weight: 6, color: "#F59E0B" },
-  { label: "2 000 FCFA", amount: 2000, weight: 3, color: "#F97316" },
-  { label: "5 000 FCFA", amount: 5000, weight: 0.8, color: "#EF4444" },
-  { label: "10 000 FCFA", amount: 10000, weight: 0.2, color: "#8B5CF6" },
+  { label: "25 FCFA", amount: 25, weight: 25, color: "#93C5FD" },
+  { label: "50 FCFA", amount: 50, weight: 15, color: "#60A5FA" },
+  { label: "100 FCFA", amount: 100, weight: 10, color: "#3B82F6" },
+  { label: "200 FCFA", amount: 200, weight: 6, color: "#F59E0B" },
+  { label: "300 FCFA", amount: 300, weight: 3, color: "#F97316" },
+  { label: "400 FCFA", amount: 400, weight: 0.8, color: "#EF4444" },
+  { label: "500 FCFA", amount: 500, weight: 0.2, color: "#8B5CF6" },
 ];
 
 export async function POST() {
