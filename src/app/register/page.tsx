@@ -1,13 +1,15 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import BrandPanel from "@/components/BrandPanel";
 
-export default function RegisterPage() {
+function RegisterForm() {
   const router = useRouter();
-  const [f, setF] = useState({ fn:"", ln:"", ph:"", em:"", co:"Burkina Faso", pw:"", cp:"", pc:"" });
+  const searchParams = useSearchParams();
+  const refCode = searchParams.get("ref") || "";
+  const [f, setF] = useState({ fn:"", ln:"", ph:"", em:"", co:"Burkina Faso", pw:"", cp:"", pc: refCode });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const up = (k: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => setF({ ...f, [k]: e.target.value });
@@ -29,11 +31,9 @@ export default function RegisterPage() {
     } catch { setError("Erreur reseau."); }
     finally { setLoading(false); }
   };
-return (
-    <div className="min-h-screen flex bg-surface">
-      <BrandPanel />
-      <div className="flex-1 flex items-center justify-center p-4 sm:p-12 bg-surface">
-        <div className="w-full max-w-md animate-slide-up">
+  return (
+    <div className="flex-1 flex items-center justify-center p-4 sm:p-12 bg-surface">
+      <div className="w-full max-w-md animate-slide-up">
           <div className="lg:hidden mb-8 text-center">
             <div className="inline-flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center">
@@ -82,6 +82,16 @@ return (
           </div>
         </div>
       </div>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <div className="min-h-screen flex bg-surface">
+      <BrandPanel />
+      <Suspense fallback={<div className="flex-1 flex items-center justify-center bg-surface"><div className="animate-spin w-6 h-6 border-2 border-brand-500 border-t-transparent rounded-full" /></div>}>
+        <RegisterForm />
+      </Suspense>
     </div>
   );
 }

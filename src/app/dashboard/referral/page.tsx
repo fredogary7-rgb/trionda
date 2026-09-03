@@ -48,9 +48,13 @@ export default function ReferralPage() {
   const code = data?.referralCode || "";
   const count = data?.referralCount || 0;
 
+  const baseUrl =
+    typeof window !== "undefined"
+      ? window.location.origin
+      : "https://trionda.com";
   const refLink = code
-    ? `https://trionda.com/register?ref=${code}`
-    : "https://trionda.com/register";
+    ? `${baseUrl}/register?ref=${code}`
+    : `${baseUrl}/register`;
 
   return (
     <div className="max-w-lg mx-auto p-4 sm:p-6 lg:p-8">
