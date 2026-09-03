@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { createSendavaPayment } from "@/lib/sendavapay";
+import { createPayment } from "@/lib/sendavapay";
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
@@ -11,10 +11,11 @@ export async function POST(req: Request) {
   const userId = (session.user as { id: string }).id;
 
   try {
-    const { amount, phone, name, email, operator } = await req.json();
+    const { amount, phone, name, email, country, currency } = await req.json();
     const amt = parseInt(amount);
-    if (!amt || amt < 500) return NextResponse.json({ error: "Montant minimum 500 FCFA." }, { status: 400 });
+    if (!amt || amt < 100) return NextResponse.json({ error: "Montant minimum 100." }, { status: 400 });
     if (!phone) return NextResponse.json({ error: "Numéro de téléphone requis." }, { status: 400 });
+    if (!country) return NextResponse.json({ error: "Pays requis." }, { status: 400 });
 
     // Transaction en attente — sera validée par le webhook
     const tx = await prisma.transaction.create({
@@ -27,28 +28,29 @@ export async function POST(req: Request) {
       },
     });
 
-    const payment = await createSendavaPayment({
+    const payment = await createPayment({
       amount: amt,
-      currency: "XOF",
-      description: `Dépôt Trionda${operator ? ` - ${operator}` : ""}`,
+      currency: currency || "XOF",
+      description: "Dépôt Trionda",
       externalReference: tx.id,
       customerPhone: phone,
-      ...(name ? { customerName: name } : {}),
-      ...(email ? { customerEmail: email } : {}),
-      redirectUrl: process.env.SENDAVAPAY_REDIRECT_URL || undefined,
-      metadata: { userId, txId: tx.id, ...(operator ? { operator } : {}) },
+      customerName: name || undefined,
+      customerEmail: email || undefined,
+      payerCountry: country,
+      webhookUrl: process.env.SENDAVAPAY_WEBHOOK_URL || undefined,
+      metadata: { userId, txId: tx.id },
     });
 
-    if (!payment?.success || !payment?.data?.paymentUrl) {
+    if (!payment?.success || !payment?.data?.paymentToken) {
       return NextResponse.json(
-        { error: payment?.error || "Impossible de créer le paiement." },
+        { error: payment?.error || payment?.code || "Impossible de créer le paiement." },
         { status: 502 }
       );
     }
 
     return NextResponse.json({
       success: true,
-      paymentUrl: payment.data.paymentUrl,
+      paymentToken: payment.data.paymentToken,
       reference: payment.data.reference,
     });
   } catch (error) {

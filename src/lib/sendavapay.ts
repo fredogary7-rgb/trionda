@@ -1,30 +1,35 @@
 import { createHmac, timingSafeEqual } from "crypto";
 
-const BASE_URL = "https://sendavapay.com/api";
+const BASE_URL = "https://sendavapay.com/api/sdk/v1";
 
 interface CreatePaymentParams {
   amount: number;
   currency?: string;
   description?: string;
-  externalReference?: string;
+  customerName?: string;
   customerEmail?: string;
   customerPhone?: string;
-  customerName?: string;
-  redirectUrl?: string;
+  payerCountry?: string;
+  webhookUrl?: string;
+  externalReference?: string;
   metadata?: Record<string, string>;
 }
 
-async function postSendava(path: string, body: unknown, timeoutMs = 12000) {
+async function request(
+  path: string,
+  options: { method?: string; body?: unknown; auth?: boolean; timeoutMs?: number } = {}
+) {
+  const { method = "GET", body, auth = true, timeoutMs = 12000 } = options;
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
+    const headers: Record<string, string> = { "Content-Type": "application/json" };
+    if (auth) headers.Authorization = `Bearer ${process.env.SENDAVAPAY_SDK_KEY}`;
+
     const res = await fetch(`${BASE_URL}${path}`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.SENDAVAPAY_SDK_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
+      method,
+      headers,
+      body: body !== undefined ? JSON.stringify(body) : undefined,
       signal: controller.signal,
     });
     const text = await res.text();
@@ -44,21 +49,27 @@ async function postSendava(path: string, body: unknown, timeoutMs = 12000) {
   }
 }
 
-export function createSendavaPayment(params: CreatePaymentParams) {
-  return postSendava("/v1/create-payment", params);
+export function createPayment(params: CreatePaymentParams) {
+  return request("/create-payment", { method: "POST", body: params });
 }
 
-export function verifySendavaPayment(reference: string) {
-  return postSendava("/v1/verify-payment", { reference });
+export function verifyPayment(reference: string) {
+  return request("/verify-payment", { method: "POST", body: { reference } });
+}
+
+export function getPaymentStatus(reference: string) {
+  return request(`/payment-status/${reference}`, { method: "GET" });
 }
 
 export function verifyWebhookSignature(rawBody: string, signature: string | null): boolean {
   const secret = process.env.SENDAVAPAY_WEBHOOK_SECRET;
   if (!signature || !secret) return false;
 
-  const expected = createHmac("sha256", secret).update(rawBody).digest("hex");
+  // Format SDK v3 : X-SendavaPay-Signature: sha256={hex}
+  const expected = "sha256=" + createHmac("sha256", secret).update(rawBody).digest("hex");
   const a = Buffer.from(expected);
   const b = Buffer.from(signature);
   if (a.length !== b.length) return false;
   return timingSafeEqual(a, b);
 }
+
