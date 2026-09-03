@@ -41,46 +41,35 @@ export async function accrueGains(userId?: string) {
 
     const creditAmount = Math.round(daysToCredit * dailyGain * 100) / 100;
 
-    await prisma.$transaction(async (tx) => {
-      await tx.userInvestment.update({
+    const ops: any[] = [
+      prisma.userInvestment.update({
         where: { id: inv.id },
         data: {
           ...(creditAmount > 0 ? { totalGain: { increment: creditAmount } } : {}),
           status: shouldComplete ? "completed" : "active",
         },
-      });
+      }),
+    ];
 
-      if (creditAmount > 0) {
-        const wallet = await tx.wallet.findUnique({ where: { userId: inv.userId } });
-        if (wallet) {
-          await tx.wallet.update({
-            where: { userId: inv.userId },
-            data: {
-              balance: { increment: creditAmount },
-              totalGains: { increment: creditAmount },
-            },
-          });
-        } else {
-          await tx.wallet.create({
-            data: {
-              userId: inv.userId,
-              balance: creditAmount,
-              totalInvested: 0,
-              totalGains: creditAmount,
-            },
-          });
-        }
-
-        await tx.transaction.create({
+    if (creditAmount > 0) {
+      ops.push(
+        prisma.wallet.upsert({
+          where: { userId: inv.userId },
+          update: { balance: { increment: creditAmount }, totalGains: { increment: creditAmount } },
+          create: { userId: inv.userId, balance: creditAmount, totalInvested: 0, totalGains: creditAmount },
+        }),
+        prisma.transaction.create({
           data: {
             userId: inv.userId,
             type: "gain",
             amount: creditAmount,
             description: `Revenu quotidien — ${inv.plan.name}`,
           },
-        });
-      }
-    });
+        })
+      );
+    }
+
+    await prisma.$transaction(ops);
 
     if (creditAmount > 0) credited++;
   }

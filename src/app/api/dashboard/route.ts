@@ -11,7 +11,11 @@ export async function GET() {
   const userId = (session.user as { id: string }).id;
 
   // Créditer les revenus quotidiens dus avant de renvoyer les données
-  await accrueGains(userId);
+  try {
+    await accrueGains(userId);
+  } catch (e) {
+    console.error("Accrue gains error:", e);
+  }
 
   const [user, wallet, investments, transactions, referralCount, plans] = await Promise.all([
     prisma.user.findUnique({
