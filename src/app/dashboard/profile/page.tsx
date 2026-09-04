@@ -153,6 +153,20 @@ export default function ProfilePage() {
         )}
       </div>
 
+      {/* Transactions */}
+      <a href="/dashboard/transactions" className="card p-4 mb-4 flex items-center gap-3 group cursor-pointer hover:border-brand-500/20 transition-all">
+        <div className="w-10 h-10 rounded-xl bg-brand-500/10 border border-brand-500/20 flex items-center justify-center shrink-0">
+          <svg className="w-5 h-5 text-brand-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+          </svg>
+        </div>
+        <div>
+          <p className="text-sm font-bold text-gray-900">Historique des transactions</p>
+          <p className="text-[11px] text-gray-400">Dépôts, gains et retraits</p>
+        </div>
+        <svg className="w-4 h-4 text-gray-400 ml-auto group-hover:text-gray-900 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+      </a>
+
       {/* Referral */}
       <div className="card p-5 mb-4">
         <p className="text-sm font-semibold text-gray-700 mb-3">Code de parrainage</p>
