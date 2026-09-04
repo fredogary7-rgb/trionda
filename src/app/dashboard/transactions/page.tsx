@@ -6,6 +6,7 @@ const TYPE_META: Record<string, { label: string; icon: string; credit: boolean }
   deposit: { label: "Dépôt", icon: "💳", credit: true },
   investment: { label: "Investissement", icon: "📈", credit: false },
   gain: { label: "Revenu quotidien", icon: "💰", credit: true },
+  wheel: { label: "Lucky Wheel", icon: "🎡", credit: true },
   referral: { label: "Bonus parrainage", icon: "🤝", credit: true },
   withdrawal: { label: "Retrait", icon: "🏧", credit: false },
   credit: { label: "Crédit", icon: "➕", credit: true },

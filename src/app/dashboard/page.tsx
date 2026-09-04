@@ -165,7 +165,7 @@ function Sections({ plans, investments, referral, transactions }: {
         {transactions.length === 0 ? <Empty text="Aucune transaction" /> : (
           <div className="space-y-2">
             {transactions.slice(0, 5).map((tx: any) => {
-              const isCredit = tx.type === "deposit" || tx.type === "gain" || tx.type === "referral";
+              const isCredit = tx.type === "deposit" || tx.type === "gain" || tx.type === "referral" || tx.type === "wheel";
               const date = new Date(tx.createdAt).toLocaleDateString("fr-FR", { day: "2-digit", month: "short" });
               return (
                 <div key={tx.id} className="flex items-center gap-3 py-2 border-b border-gray-100 last:border-0">
