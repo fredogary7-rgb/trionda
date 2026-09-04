@@ -87,7 +87,7 @@ export default function ReferralPage() {
           {/* NIVEAU A */}
           <LevelCard
             level="A"
-            pct={15}
+            pct={10}
             icon="⭐"
             color="text-gold-400"
             bg="bg-gold-500/10"
