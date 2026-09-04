@@ -5,7 +5,7 @@ export default function FloatingContact() {
     <div className="fixed bottom-24 right-4 z-40 flex flex-col gap-3">
       {/* WhatsApp */}
       <a
-        href="https://chat.whatsapp.com/LwlRMaQudAzCxF4xQiU4vp"
+        href="https://chat.whatsapp.com/K0juvOCoLalLC5ieysWgax?s=cl&p=i&mlu=4&ilr=4"
         target="_blank"
         rel="noopener noreferrer"
         className="w-12 h-12 rounded-full bg-emerald-500 shadow-lg shadow-emerald-500/30 flex items-center justify-center hover:scale-110 active:scale-95 transition-all"

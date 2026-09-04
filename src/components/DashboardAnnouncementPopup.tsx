@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const WHATSAPP_LINK = "https://chat.whatsapp.com/LwlRMaQudAzCxF4xQiU4vp";
+const WHATSAPP_LINK = "https://chat.whatsapp.com/K0juvOCoLalLC5ieysWgax?s=cl&p=i&mlu=4&ilr=4";
 
 export default function DashboardAnnouncementPopup() {
   const [open, setOpen] = useState(false);

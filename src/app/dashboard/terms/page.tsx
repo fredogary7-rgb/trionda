@@ -104,7 +104,7 @@ export default function TermsPage() {
               className="text-brand-600 hover:text-brand-700 font-medium text-sm">
               Telegram : @trionda_service01
             </a>
-            <a href="https://chat.whatsapp.com/LwlRMaQudAzCxF4xQiU4vp" target="_blank" rel="noopener noreferrer"
+            <a href="https://chat.whatsapp.com/K0juvOCoLalLC5ieysWgax?s=cl&p=i&mlu=4&ilr=4" target="_blank" rel="noopener noreferrer"
               className="text-brand-600 hover:text-brand-700 font-medium text-sm">
               WhatsApp : Groupe Trionda
             </a>

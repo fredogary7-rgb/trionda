@@ -30,7 +30,7 @@ export default function ContactButtons() {
 
         {/* WhatsApp */}
         <a
-          href="https://chat.whatsapp.com/LwlRMaQudAzCxF4xQiU4vp"
+          href="https://chat.whatsapp.com/K0juvOCoLalLC5ieysWgax?s=cl&p=i&mlu=4&ilr=4"
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-3 p-3 rounded-2xl bg-emerald-50 border border-emerald-100 hover:bg-emerald-100 transition-colors group"
