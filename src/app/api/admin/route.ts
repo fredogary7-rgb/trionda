@@ -9,9 +9,10 @@ export async function GET() {
     return NextResponse.json({ error: "Non autorisé" }, { status: 403 });
   }
 
-  const [users, pendingDeposits, pendingWithdrawals, completedWithdrawals, transactions, stats] = await Promise.all([
+  const [users, pendingDeposits, completedDeposits, pendingWithdrawals, completedWithdrawals, transactions, stats] = await Promise.all([
     prisma.user.findMany({ select: { id: true, firstName: true, lastName: true, phone: true, email: true, isBanned: true, isAdmin: true, createdAt: true }, orderBy: { createdAt: "desc" } }),
     prisma.transaction.findMany({ where: { type: "deposit", status: "pending" }, include: { user: { select: { firstName: true, lastName: true, phone: true } } }, orderBy: { createdAt: "desc" } }),
+    prisma.transaction.findMany({ where: { type: "deposit", status: "completed" }, include: { user: { select: { firstName: true, lastName: true, phone: true } } }, orderBy: { createdAt: "desc" }, take: 100 }),
     prisma.transaction.findMany({ where: { type: "withdrawal", status: "pending" }, include: { user: { select: { firstName: true, lastName: true, phone: true } } }, orderBy: { createdAt: "desc" } }),
     prisma.transaction.findMany({ where: { type: "withdrawal", status: "completed" }, include: { user: { select: { firstName: true, lastName: true, phone: true } } }, orderBy: { createdAt: "desc" }, take: 100 }),
     prisma.transaction.findMany({ include: { user: { select: { firstName: true, lastName: true, phone: true } } }, orderBy: { createdAt: "desc" }, take: 50 }),
@@ -21,6 +22,7 @@ export async function GET() {
   return NextResponse.json({
     users,
     pendingDeposits,
+    completedDeposits,
     pendingWithdrawals,
     completedWithdrawals,
     transactions,

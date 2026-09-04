@@ -113,29 +113,56 @@ export default function AdminPage() {
 
       {/* Deposits tab */}
       {tab === "deposits" && (
-        <div className="card p-5">
-          {data?.pendingDeposits?.length === 0 ? (
-            <p className="text-sm text-gray-400 text-center py-6">Aucun dépôt en attente.</p>
-          ) : (
-            <div className="space-y-2 max-h-[60vh] overflow-y-auto">
-              {data?.pendingDeposits?.map((tx: any) => (
-                <div key={tx.id} className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
-                  <div>
-                    <p className="text-sm font-medium text-gray-900">{tx.user.firstName} {tx.user.lastName}</p>
-                    <p className="text-[11px] text-gray-400">{tx.description}</p>
+        <div className="space-y-4">
+          {/* En attente */}
+          <div className="card p-5">
+            <h3 className="text-sm font-bold text-gray-900 mb-3">Dépôts en attente</h3>
+            {data?.pendingDeposits?.length === 0 ? (
+              <p className="text-sm text-gray-400 text-center py-6">Aucun dépôt en attente.</p>
+            ) : (
+              <div className="space-y-2 max-h-[50vh] overflow-y-auto">
+                {data?.pendingDeposits?.map((tx: any) => (
+                  <div key={tx.id} className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+                    <div>
+                      <p className="text-sm font-medium text-gray-900">{tx.user.firstName} {tx.user.lastName}</p>
+                      <p className="text-[11px] text-gray-400">{tx.description}</p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-sm font-bold text-emerald-400">+{fmt(tx.amount)} FCFA</span>
+                      <button onClick={() => doAction("/api/admin/actions", { txId: tx.id })}
+                        disabled={acting === tx.id}
+                        className="text-[11px] px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 font-medium transition-colors">
+                        {acting === tx.id ? "..." : "Approuver"}
+                      </button>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <span className="text-sm font-bold text-emerald-400">+{fmt(tx.amount)} FCFA</span>
-                    <button onClick={() => doAction("/api/admin/actions", { txId: tx.id })}
-                      disabled={acting === tx.id}
-                      className="text-[11px] px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 font-medium transition-colors">
-                      {acting === tx.id ? "..." : "Approuver"}
-                    </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Approuvés */}
+          <div className="card p-5">
+            <h3 className="text-sm font-bold text-gray-900 mb-3">Dépôts approuvés</h3>
+            {data?.completedDeposits?.length === 0 ? (
+              <p className="text-sm text-gray-400 text-center py-6">Aucun dépôt approuvé.</p>
+            ) : (
+              <div className="space-y-2 max-h-[50vh] overflow-y-auto">
+                {data?.completedDeposits?.map((tx: any) => (
+                  <div key={tx.id} className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+                    <div>
+                      <p className="text-sm font-medium text-gray-900">{tx.user.firstName} {tx.user.lastName}</p>
+                      <p className="text-[11px] text-gray-400">{tx.description}</p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-sm font-bold text-emerald-400">+{fmt(tx.amount)} FCFA</span>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-medium shrink-0">✓ Approuvé</span>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          )}
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       )}
 
