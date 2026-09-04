@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, type ReactNode } from "react";
+import DashboardAnnouncementPopup from "@/components/DashboardAnnouncementPopup";
 
 interface DashboardData {
   user: { firstName: string; lastName: string; referralCode: string };
@@ -32,6 +33,7 @@ export default function DashboardPage() {
 
   return (
     <div className="max-w-2xl mx-auto p-4 sm:p-5 animate-fade-in">
+      <DashboardAnnouncementPopup />
       <Greeting firstName={d.user.firstName} lastName={d.user.lastName} />
       <WalletCard balance={balance} name={`${d.user.firstName} ${d.user.lastName}`} code={d.user.referralCode} />
       <QuickActions />
