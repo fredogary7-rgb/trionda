@@ -132,7 +132,7 @@ export default function ReferralPage() {
               <span className="text-gold-400 font-bold">
                 Niveau A :
               </span>{" "}
-              vous recevez <strong className="text-gray-900">15 %</strong>{" "}
+              vous recevez <strong className="text-gray-900">10 %</strong>{" "}
               de l'investissement de votre filleul A.
             </p>
 
@@ -171,8 +171,8 @@ export default function ReferralPage() {
           <div className="space-y-1">
 
             <p className="text-[11px] text-gold-400">
-              → Niveau A : 15 % ={" "}
-              <strong>15 000 FCFA</strong>
+              → Niveau A : 10 % ={" "}
+              <strong>10 000 FCFA</strong>
             </p>
 
             <p className="text-[11px] text-brand-500">
@@ -286,7 +286,7 @@ export default function ReferralPage() {
 
           <Step
             num={4}
-            text="Niveau A : 15 % • Niveau B : 2 % • Niveau C : 1 %."
+            text="Niveau A : 10 % • Niveau B : 2 % • Niveau C : 1 %."
           />
 
         </div>
