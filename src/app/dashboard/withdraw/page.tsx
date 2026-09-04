@@ -42,10 +42,10 @@ export default function WithdrawPage() {
   const handleSubmit = async () => {
     const amt = parseInt(amount);
 
-    if (!amt || amt < 500) {
+    if (!amt || amt < 1000) {
       setMsg({
         type: "error",
-        text: "Montant minimum 500 FCFA."
+        text: "Montant minimum 1000 FCFA."
       });
       return;
     }
@@ -235,6 +235,9 @@ export default function WithdrawPage() {
                   placeholder="Ex: 25000"
                 />
               </div>
+              <p className="text-[11px] text-emerald-500 font-medium mt-2">
+                Frais de retrait : 0% (gratuit)
+              </p>
             </div>
 
             <div>

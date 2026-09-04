@@ -2,8 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const STORAGE_KEY = "trionda_dashboard_popup_last_closed";
-const RESHOW_AFTER_MS = 24 * 60 * 60 * 1000; // 24 heures
 const WHATSAPP_LINK = "https://chat.whatsapp.com/LwlRMaQudAzCxF4xQiU4vp";
 
 export default function DashboardAnnouncementPopup() {
@@ -11,36 +9,15 @@ export default function DashboardAnnouncementPopup() {
   const [shown, setShown] = useState(false);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Ouverture automatique au premier montage (client uniquement, une seule fois)
+  // Affichage automatique à chaque visite du dashboard
   useEffect(() => {
-    let shouldShow = true;
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        const last = parseInt(raw, 10);
-        if (!isNaN(last) && Date.now() - last < RESHOW_AFTER_MS) {
-          shouldShow = false;
-        }
-      }
-    } catch {
-      // localStorage indisponible : on affiche quand même (dégradation propre)
-    }
-
-    if (shouldShow) {
-      setOpen(true);
-      // Déclenche l'animation d'entrée après le rendu
-      const t = setTimeout(() => setShown(true), 30);
-      return () => clearTimeout(t);
-    }
+    setOpen(true);
+    // Déclenche l'animation d'entrée après le rendu
+    const t = setTimeout(() => setShown(true), 30);
+    return () => clearTimeout(t);
   }, []);
 
   const close = useCallback(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, String(Date.now()));
-    } catch {
-      // ignorer si localStorage indisponible
-    }
-
     setShown(false);
     if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
     closeTimerRef.current = setTimeout(() => {

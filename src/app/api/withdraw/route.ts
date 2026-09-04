@@ -12,7 +12,7 @@ export async function POST(req: Request) {
   try {
     const { amount, phone, name } = await req.json();
     const amt = parseInt(amount);
-    if (!amt || amt < 500) return NextResponse.json({ error: "Montant minimum 500 FCFA." }, { status: 400 });
+    if (!amt || amt < 1000) return NextResponse.json({ error: "Montant minimum 1000 FCFA." }, { status: 400 });
     if (!phone) return NextResponse.json({ error: "Numéro requis." }, { status: 400 });
 
     // Vérifier si l'utilisateur a au moins un investissement actif
