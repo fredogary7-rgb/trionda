@@ -9,29 +9,29 @@ export default function TopNav({ userName, isAdmin }: { userName?: string; isAdm
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-gray-100">
+    <nav className="sticky top-0 z-50 bg-[#0a0f1a]/90 backdrop-blur-xl border-b border-white/5">
       <div className="max-w-2xl mx-auto px-5">
         <div className="flex items-center justify-between h-14">
           <Link href="/dashboard" className="flex items-center gap-2.5 shrink-0">
-            <div className="w-8 h-8 rounded-xl bg-brand-500 flex items-center justify-center">
-              <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center shadow-[0_0_12px_rgba(0,223,216,0.5)]">
+              <svg className="w-4 h-4 text-[#04121a]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
               </svg>
             </div>
-            <span className="text-lg font-black tracking-tighter text-gray-900">TRION<span className="text-brand-500">DA</span></span>
+            <span className="text-lg font-black tracking-tighter text-white">TRION<span className="text-brand-400 neon-text">DA</span></span>
           </Link>
 
           <div className="flex items-center gap-2">
             {isAdmin && (
-              <Link href="/admin" className="w-9 h-9 rounded-xl bg-brand-50 flex items-center justify-center">
-                <svg className="w-4 h-4 text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <Link href="/admin" className="w-9 h-9 rounded-xl bg-brand-500/10 flex items-center justify-center">
+                <svg className="w-4 h-4 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
               </Link>
             )}
             <NotificationCenter />
-            <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center">
-              <svg className="w-4 h-4 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center">
+              <svg className="w-4 h-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d={menuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
               </svg>
             </button>
@@ -39,18 +39,18 @@ export default function TopNav({ userName, isAdmin }: { userName?: string; isAdm
         </div>
 
         {menuOpen && (
-          <div className="md:hidden border-t border-gray-100 py-3 space-y-1">
+          <div className="md:hidden border-t border-white/5 py-3 space-y-1">
             {userName && (
               <Link href="/dashboard/profile" onClick={() => setMenuOpen(false)}
-                className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-gray-700 hover:bg-gray-50">
-                <div className="w-7 h-7 rounded-lg bg-brand-100 flex items-center justify-center text-[10px] font-bold text-brand-600">
+                className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-gray-700 hover:bg-white/5">
+                <div className="w-7 h-7 rounded-lg bg-brand-500/15 flex items-center justify-center text-[10px] font-bold text-brand-400">
                   {userName.charAt(0)}
                 </div>
                 {userName}
               </Link>
             )}
             <button onClick={() => { setMenuOpen(false); signOut({ callbackUrl: "/login" }); }}
-              className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm text-gray-500 hover:text-flame-500 hover:bg-flame-50">
+              className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm text-gray-400 hover:text-flame-400 hover:bg-flame-500/10">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
               </svg>

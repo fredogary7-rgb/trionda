@@ -24,19 +24,22 @@ export default function BottomNav() {
   const active = (href: string) => href === "/dashboard" ? pathname === "/dashboard" : pathname.startsWith(href);
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-100 safe-area-bottom">
-      <div className="max-w-lg mx-auto flex items-center justify-around h-16 px-1">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-[#0a0f1a]/95 backdrop-blur-xl border-t border-white/5 safe-area-bottom">
+      <div className="max-w-lg mx-auto flex items-center justify-around h-16 px-2">
         {ITEMS.map((item) => {
           const isActive = active(item.href);
           return (
             <Link key={item.href} href={item.href}
-              className={`flex flex-col items-center justify-center gap-0.5 min-w-[56px] py-1 rounded-xl transition-all ${
-                isActive ? "text-brand-600" : "text-gray-400 hover:text-gray-600"
+              className={`flex flex-col items-center justify-center gap-0.5 min-w-[56px] py-1 rounded-xl transition-all duration-200 ${
+                isActive ? "text-brand-400" : "text-gray-400 hover:text-gray-600"
               }`}>
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={isActive ? 2 : 1.5}>
+              <svg
+                className={`w-5 h-5 transition-all duration-200 ${isActive ? "scale-110 drop-shadow-[0_0_6px_rgba(0,223,216,0.7)]" : ""}`}
+                fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={isActive ? 2 : 1.5}
+              >
                 {Icons[item.icon]}
               </svg>
-              <span className={`text-[10px] font-semibold ${isActive ? "text-brand-600" : ""}`}>{item.label}</span>
+              <span className={`text-[10px] font-semibold ${isActive ? "text-brand-400" : ""}`}>{item.label}</span>
             </Link>
           );
         })}
