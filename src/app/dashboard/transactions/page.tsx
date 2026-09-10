@@ -78,8 +78,8 @@ export default function TransactionsPage() {
             onClick={() => setFilter(f.key)}
             className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-colors border ${
               filter === f.key
-                ? "bg-brand-500/10 text-brand-500 border-brand-500/20"
-                : "bg-white text-gray-400 border-gray-100"
+                ? "bg-brand-500/10 text-brand-400 border-brand-500/20"
+                : "bg-[#0e1422] text-gray-400 border-white/5"
             }`}
           >
             {f.label}
@@ -99,7 +99,7 @@ export default function TransactionsPage() {
               const amt = Math.abs(parseFloat(tx.amount || "0"));
               return (
                 <div key={tx.id} className="flex items-center gap-3 p-3 rounded-xl bg-gray-50">
-                  <div className="w-10 h-10 rounded-xl bg-white border border-gray-100 flex items-center justify-center text-lg shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-[#0e1422] border border-white/5 flex items-center justify-center text-lg shrink-0">
                     {meta.icon}
                   </div>
                   <div className="flex-1 min-w-0">

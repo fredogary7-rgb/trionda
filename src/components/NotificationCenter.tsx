@@ -69,7 +69,7 @@ return (
 
 function Dropdown({ notifs, loading, onMarkAll }: { notifs: Notif[]; loading: boolean; onMarkAll: () => void }) {
   return (
-    <div className="absolute right-0 top-12 w-80 sm:w-96 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden animate-fade-in z-50">
+    <div className="absolute right-0 top-12 w-80 sm:w-96 bg-[#0e1422] rounded-2xl shadow-xl border border-white/10 overflow-hidden animate-fade-in z-50">
       <div className="flex items-center justify-between p-4 border-b border-gray-100">
         <h3 className="text-sm font-bold text-gray-900">Notifications</h3>
         <span className="text-[11px] text-brand-500 font-medium">{notifs.length} récentes</span>

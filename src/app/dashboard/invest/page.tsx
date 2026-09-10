@@ -98,7 +98,7 @@ export default function InvestPage() {
           <p className="text-sm text-gray-400">Choisissez un plan</p>
           <h2 className="text-xl font-black text-gray-900">💰 Investir</h2>
         </div>
-        <div className="bg-white rounded-xl px-4 py-2">
+        <div className="bg-[#0e1422] border border-white/5 rounded-xl px-4 py-2">
           <p className="text-[10px] text-gray-400 uppercase mb-0.5">Solde</p>
           <p className="text-sm font-bold text-gray-900">{balance.toLocaleString("fr-FR")} FCFA</p>
         </div>

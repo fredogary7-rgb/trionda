@@ -62,12 +62,12 @@ function RegisterForm() {
                 <div><label className="block text-xs font-medium text-gray-600 mb-1">Prenom</label><input type="text" value={f.fn} onChange={up("fn")} className="input-light" placeholder="Jean" required /></div>
                 <div><label className="block text-xs font-medium text-gray-600 mb-1">Nom</label><input type="text" value={f.ln} onChange={up("ln")} className="input-light" placeholder="Ouedraogo" required /></div>
               </div>
-              <div><label className="block text-xs font-medium text-gray-600 mb-1">Telephone *</label><div className="input-light flex items-center gap-2 focus-within:border-brand-400 focus-within:ring-2 focus-within:ring-brand-400/15 focus-within:bg-white"><span className="text-gray-900 font-semibold shrink-0">+226</span><span className="text-gray-300">|</span><input type="tel" value={f.ph} onChange={up("ph")} className="bg-transparent outline-none w-full" placeholder="70 12 34 56" required /></div></div>
+              <div><label className="block text-xs font-medium text-gray-600 mb-1">Telephone *</label><div className="input-light flex items-center gap-2 focus-within:border-brand-400 focus-within:ring-2 focus-within:ring-brand-400/15"><span className="text-gray-900 font-semibold shrink-0">+226</span><span className="text-gray-300">|</span><input type="tel" value={f.ph} onChange={up("ph")} className="bg-transparent outline-none w-full" placeholder="70 12 34 56" required /></div></div>
               <div><label className="block text-xs font-medium text-gray-600 mb-1">Pays</label><div className="input-light flex items-center gap-2 cursor-default"><span className="text-lg">🇧🇫</span><span className="text-gray-900 font-medium">Burkina Faso</span></div></div>
               <div className="relative">
                 <label className="block text-xs font-medium text-gray-600 mb-1">Code promo</label>
                 <input type="text" value={f.pc} onChange={up("pc")} className="input-light" placeholder="Ex: TRD-JO-ABCD" />
-                <span className="absolute right-3 top-0 text-[10px] text-gold-500 font-semibold bg-white px-1.5 rounded">Bonus</span>
+                <span className="absolute right-3 top-0 text-[10px] text-gold-400 font-semibold bg-[#0e1422] px-1.5 rounded">Bonus</span>
               </div>
               <div><label className="block text-xs font-medium text-gray-600 mb-1">Mot de passe</label><input type="password" value={f.pw} onChange={up("pw")} className="input-light" placeholder="6 caracteres min." required /></div>
               <div><label className="block text-xs font-medium text-gray-600 mb-1">Confirmer</label><input type="password" value={f.cp} onChange={up("cp")} className="input-light" placeholder="........" required /></div>
@@ -76,7 +76,7 @@ function RegisterForm() {
 
             <div className="relative my-6">
               <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-200" /></div>
-              <div className="relative flex justify-center"><span className="px-4 text-xs text-gray-400 bg-white">OU</span></div>
+              <div className="relative flex justify-center"><span className="px-4 text-xs text-gray-400 bg-[#0e1422]">OU</span></div>
             </div>
 
             <p className="text-center text-sm text-gray-500">

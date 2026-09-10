@@ -77,7 +77,7 @@ export default function AdminPage() {
         {(["users","deposits","withdrawals","credit"] as const).map(t => (
           <button key={t} onClick={() => setTab(t)}
             className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-colors ${
-              tab === t ? "bg-brand-500/10 text-brand-500 border border-brand-500/20" : "bg-white text-gray-400 hover:text-gray-900"
+              tab === t ? "bg-brand-500/10 text-brand-400 border border-brand-500/20" : "bg-[#0e1422] text-gray-400 border border-white/5 hover:text-gray-700"
             }`}>
             {t === "users" && `👥 Utilisateurs (${data?.users?.length || 0})`}
             {t === "deposits" && `💳 Dépôts (${data?.pendingDeposits?.length || 0})`}

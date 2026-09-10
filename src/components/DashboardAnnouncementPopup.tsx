@@ -62,7 +62,7 @@ export default function DashboardAnnouncementPopup() {
 
       {/* Carte */}
       <div
-        className={`relative w-full max-w-[480px] max-h-[80vh] overflow-y-auto bg-white rounded-[28px] shadow-2xl transition-all duration-300 ${
+        className={`relative w-full max-w-[480px] max-h-[80vh] overflow-y-auto bg-[#0e1422] rounded-[28px] shadow-2xl border border-white/10 transition-all duration-300 ${
           shown ? "opacity-100 scale-100" : "opacity-0 scale-95"
         }`}
       >

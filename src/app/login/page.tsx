@@ -87,7 +87,7 @@ function LoginForm() {
 
           <div className="relative my-7">
             <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-200" /></div>
-            <div className="relative flex justify-center"><span className="px-4 text-xs text-gray-400 bg-white">OU</span></div>
+            <div className="relative flex justify-center"><span className="px-4 text-xs text-gray-400 bg-[#0e1422]">OU</span></div>
           </div>
 
           <p className="text-center text-sm text-gray-500">
