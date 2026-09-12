@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 
-const REFERRAL_LEVELS = [10, 2, 1]; // Lv1 10%, Lv2 2%, Lv3 1%
+const REFERRAL_LEVELS = [15, 4, 2]; // Lv1 15%, Lv2 4%, Lv3 2%
 
 /**
  * Valide un dépôt en attente : marque la transaction "completed",
